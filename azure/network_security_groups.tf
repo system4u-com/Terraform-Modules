@@ -53,3 +53,18 @@ resource "azurerm_network_security_rule" "network_security_rules" {
   resource_group_name = each.value.resource_group_name
   network_security_group_name = each.value.network_security_group_name
 }
+
+
+resource "azurerm_subnet_network_security_group_association" "network_security_group_subnet_associations" {
+  for_each = { for k, v in var.network_security_groups : k => v if v.subnet_association != null }
+
+  subnet_id = each.value.subnet_association.id
+  network_security_group_id = azurerm_network_security_group.network_security_groups[each.key].id
+}
+
+resource "azurerm_network_interface_security_group_association" "network_security_group_nic_associations" {
+  for_each = { for k, v in var.network_security_groups : k => v if v.nic_association != null }
+
+  network_interface_id = each.value.nic_association.id
+  network_security_group_id = azurerm_network_security_group.network_security_groups[each.key].id
+}

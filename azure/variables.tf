@@ -12,6 +12,22 @@ variable "resource_groups" {
   default = {}
 }
 
+variable "public_ips" {
+  description = "Public IP Addresses"
+  type = map(object({
+    resource_group = object({
+        id = string
+        name = string
+        location = string
+    })
+    sku = optional(string, "Standard")
+    allocation_method = optional(string, "Static")
+    domain_name_label = optional(string, null)
+    tags = optional(map(string), {})
+  }))
+  default = {}
+}
+
 variable "virtual_networks" {
   description = "Virtual Networks"
   type = map(object({
@@ -45,16 +61,22 @@ variable "network_security_groups" {
   description = "Network Security Groups"
   type = map(object({
     resource_group = object({
-        id = string
-        name = string
-        location = string
+      id = string
+      name = string
+      location = string
     })
+    subnet_association = optional(object({
+      id = string
+    }), null)
+    nic_association = optional(object({
+      id = string
+    }), null)
     tags = optional(map(string), {})
     rules = optional(map(object({
       priority = string
       direction = string // Inbound | Outbound
       access = string // Allow | Deny
-      protocol = optional(string, "Tcp") // Tcp | Udp | Icmp | Esp | Ah | *
+      protocol = optional(string, "*") // Tcp | Udp | Icmp | Esp | Ah | *
       source_address_prefix = optional(string, null)
       source_address_prefixes = optional(list(string), null)
       source_port_range = optional(string, null)
