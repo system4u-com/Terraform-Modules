@@ -40,3 +40,31 @@ variable "subnets" {
   }))
   default = {}
 }
+
+variable "network_security_groups" {
+  description = "Network Security Groups"
+  type = map(object({
+    resource_group = object({
+        id = string
+        name = string
+        location = string
+    })
+    tags = optional(map(string), {})
+    rules = optional(map(object({
+      priority = string
+      direction = string // Inbound | Outbound
+      access = string // Allow | Deny
+      protocol = optional(string, "Tcp") // Tcp | Udp | Icmp | Esp | Ah | *
+      source_address_prefix = optional(string, null)
+      source_address_prefixes = optional(list(string), null)
+      source_port_range = optional(string, null)
+      source_port_ranges = optional(list(string), null)
+      destination_address_prefix = optional(string, null)
+      destination_address_prefixes = optional(list(string), null)
+      destination_port_range = optional(string, null)
+      destination_port_ranges = optional(list(string), null)
+      description = optional(string)
+    })), {})
+  }))
+  default = {}
+}
