@@ -1,9 +1,9 @@
-variable "azure_default_location" {
+variable "default_location" {
     description = "Default Location"
     default = "northeurope"
 }
 
-variable "azure_resource_groups" {
+variable "resource_groups" {
   description = "Resource Groups"
   type = map(object({
     location = optional(string, "")
@@ -12,7 +12,7 @@ variable "azure_resource_groups" {
   default = {}
 }
 
-variable "azure_virtual_networks" {
+variable "virtual_networks" {
   description = "Virtual Networks"
   type = map(object({
     resource_group = object({
@@ -23,6 +23,20 @@ variable "azure_virtual_networks" {
     address_space = list(string)
     dns_servers = optional(list(string), [])
     tags = optional(map(string), {})
+  }))
+  default = {}
+}
+
+variable "subnets" {
+  description = "Subnets"
+  type = map(object({
+    virtual_network = object({
+        id = string
+        name = string
+        location = string
+        resource_group_name = string
+    })
+    address_prefixes = list(string)
   }))
   default = {}
 }

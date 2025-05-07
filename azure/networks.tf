@@ -1,5 +1,5 @@
-resource "azurerm_virtual_network" "azure_virtual_networks" {
-    for_each = var.azure_virtual_networks
+resource "azurerm_virtual_network" "virtual_networks" {
+    for_each = var.virtual_networks
 
     name = each.key
     resource_group_name = each.value.resource_group.name
@@ -7,4 +7,13 @@ resource "azurerm_virtual_network" "azure_virtual_networks" {
     address_space = each.value.address_space
     dns_servers = each.value.dns_servers
     tags = each.value.tags
+}
+
+resource "azurerm_subnet" "subnets" {
+    for_each = var.subnets
+
+    name                 = each.key
+    resource_group_name  = each.value.virtual_network.resource_group_name
+    virtual_network_name = each.value.virtual_network.name
+    address_prefixes     = each.value.address_prefixes
 }
