@@ -4,6 +4,7 @@ resource "azurerm_network_security_group" "network_security_groups" {
   name = each.key
   location = each.value.resource_group.location
   resource_group_name = each.value.resource_group.name
+  tags = each.value.tags
 }
 
 locals {
