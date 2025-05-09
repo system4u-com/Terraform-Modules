@@ -6,7 +6,7 @@ variable "default_location" {
 variable "resource_groups" {
   description = "Resource Groups"
   type = map(object({
-    location = optional(string, "")
+    location = optional(string)
     tags     = optional(map(string), {})
   }))
   default = {}
@@ -22,7 +22,7 @@ variable "public_ips" {
     })
     sku               = optional(string, "Standard")
     allocation_method = optional(string, "Static")
-    domain_name_label = optional(string, null)
+    domain_name_label = optional(string)
     tags              = optional(map(string), {})
   }))
   default = {}
@@ -102,13 +102,13 @@ variable "network_security_groups" {
       direction                    = string                // Inbound | Outbound
       access                       = string                // Allow | Deny
       protocol                     = optional(string, "*") // Tcp | Udp | Icmp | Esp | Ah | *
-      source_address_prefix        = optional(string, null)
+      source_address_prefix        = optional(string)
       source_address_prefixes      = optional(list(string), null)
-      source_port_range            = optional(string, null)
+      source_port_range            = optional(string)
       source_port_ranges           = optional(list(string), null)
-      destination_address_prefix   = optional(string, null)
+      destination_address_prefix   = optional(string)
       destination_address_prefixes = optional(list(string), null)
-      destination_port_range       = optional(string, null)
+      destination_port_range       = optional(string)
       destination_port_ranges      = optional(list(string), null)
       description                  = optional(string)
     })), {})
@@ -125,15 +125,11 @@ variable "network_interfaces" {
       location = string
     })
     ip_configurations = map(object({
-      subnet = object({
-        id = string
-      })
-      private_ip_address            = optional(string, null)
+      subnet_id = string
+      public_ip_address_id          = optional(string)
       private_ip_address_allocation = optional(string, "Dynamic") // Dynamic | Static
       private_ip_address_version    = optional(string, "IPv4")    // IPv4 | IPv6
-      public_ip = optional(object({
-        id = string
-      }))
+      private_ip_address            = optional(string)
     }))
     tags = optional(map(string), {})
   }))
@@ -150,7 +146,7 @@ variable "linux_virtual_machines" {
     })
     size                            = optional(string, "Standard_B2s")
     admin_username                  = optional(string, "adminuser")
-    admin_password                  = optional(string, null)
+    admin_password                  = optional(string)
     disable_password_authentication = optional(bool, false)
     os_disk = optional(object({
       caching              = optional(string, "ReadWrite")
@@ -161,7 +157,8 @@ variable "linux_virtual_machines" {
       offer     = optional(string, "ubuntu-24_04-lts")
       sku       = optional(string, "server")
       version   = optional(string, "latest")
-    }), null)
+    }))
+    network_interface_ids = optional(list(string), [])
     tags = optional(map(string), {})
   }))
   default = {}
@@ -177,7 +174,7 @@ variable "windows_virtual_machines" {
     })
     size           = optional(string, "Standard_B2s")
     admin_username = optional(string, "adminuser")
-    admin_password = optional(string,"P@$$w0rd1234!")
+    admin_password = optional(string,"Ch@ng3m3!")
     os_disk = optional(object({
       caching              = optional(string, "ReadWrite")
       storage_account_type = optional(string, "Standard_LRS")
@@ -189,6 +186,7 @@ variable "windows_virtual_machines" {
       sku       = optional(string, "2022-datacenter-g2")
       version   = optional(string, "latest")
     }), null)
+    network_interface_ids = optional(list(string), [])
     tags = optional(map(string), {})
   }))
   default = {}
