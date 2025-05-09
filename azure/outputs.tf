@@ -64,16 +64,28 @@ output "network_security_groups" {
   }
 }
 
-# output "network_security_rules" {
-#   value = {
-#     for k, value in azurerm_network_security_rule.network_security_rules : k => {
-#       id                          = value.id
-#       name                        = value.name
-#       network_security_group_name = value.network_security_group_name
-#       resource_group_name         = value.resource_group_name
-#     }
-#   }
-# }
+locals {
+  network_security_rules_flattened = flatten([
+    for instance_key, instance_value in var.network_security_groups : [
+      for rule_key, rule_value in lookup(instance_value, "rules", {}) : {
+        key                          = "${instance_key}-${rule_key}"
+        name                         = "${rule_key}"
+        resource_group_name          = "${instance_value.resource_group.name}"
+        network_security_group_name  = "${instance_key}"
+      }
+    ]
+  ])
+}
+
+output "network_security_rules" {
+  value = {
+    for k, value in local.network_security_rules_flattened : k => {
+      name                        = value.name
+      network_security_group_name = value.network_security_group_name
+      resource_group_name         = value.resource_group_name
+    }
+  }
+}
 
 output "network_interfaces" {
   value = {
