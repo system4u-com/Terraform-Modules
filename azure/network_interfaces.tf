@@ -10,11 +10,11 @@ resource "azurerm_network_interface" "network_interfaces" {
 
     content {
       name                          = ip_configuration.key
-      subnet_id                     = ip_configuration.value.subnet.id
+      subnet_id                     = ip_configuration.value.subnet_id
       private_ip_address            = ip_configuration.value.private_ip_address
       private_ip_address_version    = ip_configuration.value.private_ip_address_version
       private_ip_address_allocation = ip_configuration.value.private_ip_address_allocation
-      public_ip_address_id          = ip_configuration.value.public_ip.id
+      public_ip_address_id          = ip_configuration.value.public_ip_address_id
     }
   }
   
