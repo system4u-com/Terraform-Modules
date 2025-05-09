@@ -182,7 +182,7 @@ variable "windows_virtual_machines" {
     admin_password = optional(string, "Ch@ng3m3!")
     os_disk = optional(object({
       caching              = optional(string, "ReadWrite")
-      storage_account_type = optional(string, "Standard_LRS")
+      storage_account_type = optional(string, "StandardSSD_LRS")
       disk_size_gb         = optional(number, 64)
     }), {})
     source_image_reference = optional(object({
