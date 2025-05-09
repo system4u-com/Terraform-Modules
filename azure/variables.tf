@@ -139,3 +139,29 @@ variable "network_interfaces" {
   }))
   default = {}
 }
+
+variable "linux_virtual_machines" {
+  description = "Linux Virtual Machines"
+  type = map(object({
+    resource_group = object({
+      id       = string
+      name     = string
+      location = string
+    })
+    tags = optional(map(string), {})
+  }))
+  default = {}
+}
+
+variable "windows_virtual_machines" {
+  description = "Windows Virtual Machines"
+  type = map(object({
+    resource_group = object({
+      id       = string
+      name     = string
+      location = string
+    })
+    tags = optional(map(string), {})
+  }))
+  default = {}
+}
