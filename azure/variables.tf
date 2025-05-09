@@ -109,7 +109,7 @@ variable "network_security_groups" {
       destination_address_prefix   = optional(string)
       destination_address_prefixes = optional(list(string), null)
       destination_port_range       = optional(string)
-      destination_port_ranges      = optional(list(string), null)
+      destination_port_ranges      = optional(list(string))
       description                  = optional(string)
     })), {})
   }))
@@ -125,7 +125,7 @@ variable "network_interfaces" {
       location = string
     })
     ip_configurations = map(object({
-      subnet_id = string
+      subnet_id                     = optional(string)
       public_ip_address_id          = optional(string)
       private_ip_address_allocation = optional(string, "Dynamic") // Dynamic | Static
       private_ip_address_version    = optional(string, "IPv4")    // IPv4 | IPv6
@@ -146,20 +146,25 @@ variable "linux_virtual_machines" {
     })
     size                            = optional(string, "Standard_B2s")
     admin_username                  = optional(string, "adminuser")
-    admin_password                  = optional(string)
+    admin_password                  = optional(string, "Ch@ng3m3!")
     disable_password_authentication = optional(bool, false)
+    admin_ssh_keys = optional(list(object({
+      username   = string
+      public_key = string
+    })), [])
     os_disk = optional(object({
       caching              = optional(string, "ReadWrite")
-      storage_account_type = optional(string, "Standard_LRS")
-    }), null)
+      storage_account_type = optional(string, "StandardSSD_LRS")
+      disk_size_gb         = optional(number, 64)
+    }), {})
     source_image_reference = optional(object({
       publisher = optional(string, "Canonical")
       offer     = optional(string, "ubuntu-24_04-lts")
       sku       = optional(string, "server")
       version   = optional(string, "latest")
-    }))
+    }), {})
     network_interface_ids = optional(list(string), [])
-    tags = optional(map(string), {})
+    tags                  = optional(map(string), {})
   }))
   default = {}
 }
@@ -174,20 +179,20 @@ variable "windows_virtual_machines" {
     })
     size           = optional(string, "Standard_B2s")
     admin_username = optional(string, "adminuser")
-    admin_password = optional(string,"Ch@ng3m3!")
+    admin_password = optional(string, "Ch@ng3m3!")
     os_disk = optional(object({
       caching              = optional(string, "ReadWrite")
       storage_account_type = optional(string, "Standard_LRS")
       disk_size_gb         = optional(number, 64)
-    }), null)
+    }), {})
     source_image_reference = optional(object({
       publisher = optional(string, "MicrosoftWindowsServer")
       offer     = optional(string, "WindowsServer")
       sku       = optional(string, "2022-datacenter-g2")
       version   = optional(string, "latest")
-    }), null)
+    }), {})
     network_interface_ids = optional(list(string), [])
-    tags = optional(map(string), {})
+    tags                  = optional(map(string), {})
   }))
   default = {}
 }
