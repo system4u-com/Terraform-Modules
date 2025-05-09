@@ -148,6 +148,20 @@ variable "linux_virtual_machines" {
       name     = string
       location = string
     })
+    size                            = optional(string, "Standard_B2s")
+    admin_username                  = optional(string, "adminuser")
+    admin_password                  = optional(string, null)
+    disable_password_authentication = optional(bool, false)
+    os_disk = optional(object({
+      caching              = optional(string, "ReadWrite")
+      storage_account_type = optional(string, "Standard_LRS")
+    }), null)
+    source_image_reference = optional(object({
+      publisher = optional(string, "Canonical")
+      offer     = optional(string, "ubuntu-24_04-lts")
+      sku       = optional(string, "server")
+      version   = optional(string, "latest")
+    }), null)
     tags = optional(map(string), {})
   }))
   default = {}
@@ -161,6 +175,20 @@ variable "windows_virtual_machines" {
       name     = string
       location = string
     })
+    size           = optional(string, "Standard_B2s")
+    admin_username = optional(string, "adminuser")
+    admin_password = optional(string,"P@$$w0rd1234!")
+    os_disk = optional(object({
+      caching              = optional(string, "ReadWrite")
+      storage_account_type = optional(string, "Standard_LRS")
+      disk_size_gb         = optional(number, 64)
+    }), null)
+    source_image_reference = optional(object({
+      publisher = optional(string, "MicrosoftWindowsServer")
+      offer     = optional(string, "WindowsServer")
+      sku       = optional(string, "2022-datacenter-g2")
+      version   = optional(string, "latest")
+    }), null)
     tags = optional(map(string), {})
   }))
   default = {}
