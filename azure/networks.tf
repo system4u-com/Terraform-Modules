@@ -1,29 +1,29 @@
 resource "azurerm_virtual_network" "virtual_networks" {
-    for_each = var.virtual_networks
+  for_each = var.virtual_networks
 
-    name = each.key
-    resource_group_name = each.value.resource_group.name
-    location = each.value.resource_group.location
-    address_space = each.value.address_space
-    dns_servers = each.value.dns_servers
-    tags = each.value.tags
+  name                = each.key
+  resource_group_name = each.value.resource_group.name
+  location            = each.value.resource_group.location
+  address_space       = each.value.address_space
+  dns_servers         = each.value.dns_servers
+  tags                = each.value.tags
 }
 
 resource "azurerm_subnet" "subnets" {
-    for_each = var.subnets
+  for_each = var.subnets
 
-    name = each.key
-    resource_group_name = each.value.virtual_network.resource_group_name
-    virtual_network_name = each.value.virtual_network.name
-    address_prefixes = each.value.address_prefixes
+  name                 = each.key
+  resource_group_name  = each.value.virtual_network.resource_group_name
+  virtual_network_name = each.value.virtual_network.name
+  address_prefixes     = each.value.address_prefixes
 }
 
 resource "azurerm_virtual_network_peering" "peering" {
-    for_each = var.peerings
+  for_each = var.peerings
 
-    name = each.key
-    resource_group_name = each.value.resource_group.name
-    virtual_network_name = each.value.virtual_network.name
-    remote_virtual_network_id = each.value.remote_virtual_network.id
-    allow_virtual_network_access = each.value.allow_virtual_network_access
+  name                         = each.key
+  resource_group_name          = each.value.resource_group.name
+  virtual_network_name         = each.value.virtual_network.name
+  remote_virtual_network_id    = each.value.remote_virtual_network.id
+  allow_virtual_network_access = each.value.allow_virtual_network_access
 }
