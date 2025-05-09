@@ -1,4 +1,4 @@
-resource "azurerm_virtual_network_peering" "peering" {
+resource "azurerm_virtual_network_peering" "peerings" {
   for_each = var.peerings
 
   name                         = each.key
