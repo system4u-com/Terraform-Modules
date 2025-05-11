@@ -23,6 +23,8 @@ resource "azurerm_windows_virtual_machine" "windows_vms" {
     version   = each.value.source_image_reference.version
   }
 
+  license_type = each.value.license_type
+
   tags = each.value.tags
 }
 
