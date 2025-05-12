@@ -12,7 +12,7 @@ resource "azurerm_virtual_network" "virtual_networks" {
 resource "azurerm_subnet" "subnets" {
   for_each = var.subnets
 
-  name                 = each.key
+  name                 = coalesce(each.value.name, each.key) // Use the key as the name if name not specified
   resource_group_name  = each.value.virtual_network.resource_group_name
   virtual_network_name = each.value.virtual_network.name
   address_prefixes     = each.value.address_prefixes

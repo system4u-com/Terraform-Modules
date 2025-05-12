@@ -16,6 +16,7 @@ variable "virtual_networks" {
 variable "subnets" {
   description = "Subnets"
   type = map(object({
+    name = optional(string)
     virtual_network = object({
       id                  = string
       name                = string
@@ -136,7 +137,7 @@ variable "network_route_tables" {
     tags = optional(map(string), {})
     routes = optional(map(object({
       address_prefix         = optional(string)
-      next_hop_type          = string // VirtualNetworkGateway, VnetLocal, Internet, VirtualAppliance and None
+      next_hop_type          = string           // VirtualNetworkGateway, VnetLocal, Internet, VirtualAppliance and None
       next_hop_in_ip_address = optional(string) // Only for VirtualAppliance
     })), {})
   }))
