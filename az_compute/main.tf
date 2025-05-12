@@ -23,6 +23,12 @@ resource "azurerm_windows_virtual_machine" "windows_vms" {
     version   = each.value.source_image_reference.version
   }
 
+  plan {
+    name      = each.value.plan.name
+    publisher = each.value.plan.publisher
+    product   = each.value.plan.product
+  }
+
   license_type = each.value.license_type
 
   tags = each.value.tags
@@ -57,10 +63,16 @@ resource "azurerm_linux_virtual_machine" "linux_vms" {
   }
 
   source_image_reference {
-    publisher = "Canonical"
-    offer     = "0001-com-ubuntu-server-jammy"
-    sku       = "22_04-lts"
-    version   = "latest"
+    publisher = each.value.source_image_reference.publisher
+    offer     = each.value.source_image_reference.offer
+    sku       = each.value.source_image_reference.sku
+    version   = each.value.source_image_reference.version
+  }
+
+  plan {
+    name      = each.value.plan.name
+    publisher = each.value.plan.publisher
+    product   = each.value.plan.product
   }
 
   tags = each.value.tags

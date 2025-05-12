@@ -26,6 +26,11 @@ variable "linux_virtual_machines" {
       sku       = optional(string, "server")
       version   = optional(string, "latest")
     }), {})
+    plan = optional(object({
+      name      = optional(string)
+      publisher = optional(string)
+      product   = optional(string)
+    }), {})
     network_interface_ids = optional(list(string), [])
     tags                  = optional(map(string), {})
   }))
@@ -54,6 +59,11 @@ variable "windows_virtual_machines" {
       offer     = optional(string, "WindowsServer")
       sku       = optional(string, "2022-datacenter-g2")
       version   = optional(string, "latest")
+    }), {})
+    plan = optional(object({
+      name      = optional(string)
+      publisher = optional(string)
+      product   = optional(string)
     }), {})
     license_type          = optional(string, "None") // on-premise license aka Azure Hybrid Use Benefit - None, Windows_Client and Windows_Server
     network_interface_ids = optional(list(string), [])
