@@ -69,6 +69,7 @@ variable "virtual_network_gateways" {
 variable "peerings" {
   description = "Virtual Network Peering"
   type = map(object({
+    name = optional(string)
     resource_group = object({
       id       = string
       name     = string
