@@ -23,10 +23,14 @@ resource "azurerm_windows_virtual_machine" "windows_vms" {
     version   = each.value.source_image_reference.version
   }
 
-  plan {
-    name      = each.value.plan.name
-    publisher = each.value.plan.publisher
-    product   = each.value.plan.product
+  dynamic "plan" {
+    for_each = each.value.plan != null ? [each.value.plan] : []
+
+    content {
+      name      = plan.value.name
+      publisher = plan.value.publisher
+      product   = plan.value.product
+    }
   }
 
   license_type = each.value.license_type
@@ -69,10 +73,14 @@ resource "azurerm_linux_virtual_machine" "linux_vms" {
     version   = each.value.source_image_reference.version
   }
 
-  plan {
-    name      = each.value.plan.name
-    publisher = each.value.plan.publisher
-    product   = each.value.plan.product
+  dynamic "plan" {
+    for_each = each.value.plan != null ? [each.value.plan] : []
+
+    content {
+      name      = plan.value.name
+      publisher = plan.value.publisher
+      product   = plan.value.product
+    }
   }
 
   tags = each.value.tags
