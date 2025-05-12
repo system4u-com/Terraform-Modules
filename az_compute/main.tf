@@ -3,7 +3,7 @@ resource "azurerm_windows_virtual_machine" "windows_vms" {
 
   name                  = each.key
   resource_group_name   = each.value.resource_group.name
-  location              = each.value.resource_group.location
+  location              = coalesce(each.value.location, each.value.resource_group.location) // Use the location from the resource group if not specified
   size                  = each.value.size
   admin_username        = each.value.admin_username
   admin_password        = each.value.admin_password
@@ -33,7 +33,7 @@ resource "azurerm_linux_virtual_machine" "linux_vms" {
 
   name                            = each.key
   resource_group_name             = each.value.resource_group.name
-  location                        = each.value.resource_group.location
+  location                        = coalesce(each.value.location, each.value.resource_group.location) // Use the location from the resource group if not specified
   size                            = each.value.size
   admin_username                  = each.value.admin_username
   admin_password                  = each.value.admin_password

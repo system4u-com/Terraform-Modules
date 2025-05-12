@@ -6,6 +6,7 @@ variable "linux_virtual_machines" {
       name     = string
       location = string
     })
+    location                        = optional(string) // Location of the VM, if not specified, it will use the location of the resource group
     size                            = optional(string, "Standard_B2s")
     admin_username                  = optional(string, "adminuser")
     admin_password                  = optional(string, "Ch@ng3m3!")
@@ -39,6 +40,7 @@ variable "windows_virtual_machines" {
       name     = string
       location = string
     })
+    location       = optional(string) // Location of the VM, if not specified, it will use the location of the resource group
     size           = optional(string, "Standard_B2s")
     admin_username = optional(string, "adminuser")
     admin_password = optional(string, "Ch@ng3m3!")
@@ -53,7 +55,7 @@ variable "windows_virtual_machines" {
       sku       = optional(string, "2022-datacenter-g2")
       version   = optional(string, "latest")
     }), {})
-    license_type = optional(string, "None") // on-premise license aka Azure Hybrid Use Benefit - None, Windows_Client and Windows_Server
+    license_type          = optional(string, "None") // on-premise license aka Azure Hybrid Use Benefit - None, Windows_Client and Windows_Server
     network_interface_ids = optional(list(string), [])
     tags                  = optional(map(string), {})
   }))
