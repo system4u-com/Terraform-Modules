@@ -67,6 +67,7 @@ variable "public_ips" {
 variable "peerings" {
   description = "Virtual Network Peering"
   type = map(object({
+    name = optional(string)
     resource_group = object({
       id       = string
       name     = string
