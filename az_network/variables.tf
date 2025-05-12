@@ -1,3 +1,19 @@
+variable "public_ips" {
+  description = "Public IP Addresses"
+  type = map(object({
+    resource_group = object({
+      id       = string
+      name     = string
+      location = string
+    })
+    sku               = optional(string, "Standard")
+    allocation_method = optional(string, "Static")
+    domain_name_label = optional(string)
+    tags              = optional(map(string), {})
+  }))
+  default = {}
+}
+
 variable "virtual_networks" {
   description = "Virtual Networks"
   type = map(object({
@@ -28,38 +44,24 @@ variable "subnets" {
   default = {}
 }
 
-variable "network_interfaces" {
-  description = "Network Interfaces"
+variable "virtual_network_gateways" {
+  description = "Virtual Network Gateways"
   type = map(object({
     resource_group = object({
       id       = string
       name     = string
       location = string
     })
+    location = optional(string) // Location of the gateway, if not specified, it will use the location of the resource group
+    name     = optional(string) // Name of the gateway, if not specified, it will use the name of the resource group
+    type     = string
+    sku      = string
     ip_configurations = map(object({
       subnet_id                     = optional(string)
       public_ip_address_id          = optional(string)
-      private_ip_address_allocation = optional(string, "Dynamic") // Dynamic | Static
-      private_ip_address_version    = optional(string, "IPv4")    // IPv4 | IPv6
-      private_ip_address            = optional(string)
+      private_ip_address_allocation = optional(string, "Dynamic") // The only value is Dynamic, Static is not supported
     }))
     tags = optional(map(string), {})
-  }))
-  default = {}
-}
-
-variable "public_ips" {
-  description = "Public IP Addresses"
-  type = map(object({
-    resource_group = object({
-      id       = string
-      name     = string
-      location = string
-    })
-    sku               = optional(string, "Standard")
-    allocation_method = optional(string, "Static")
-    domain_name_label = optional(string)
-    tags              = optional(map(string), {})
   }))
   default = {}
 }
@@ -85,6 +87,26 @@ variable "peerings" {
       resource_group_name = string
     })
     allow_virtual_network_access = optional(bool, true)
+  }))
+  default = {}
+}
+
+variable "network_interfaces" {
+  description = "Network Interfaces"
+  type = map(object({
+    resource_group = object({
+      id       = string
+      name     = string
+      location = string
+    })
+    ip_configurations = map(object({
+      subnet_id                     = optional(string)
+      public_ip_address_id          = optional(string)
+      private_ip_address_allocation = optional(string, "Dynamic") // Dynamic | Static
+      private_ip_address_version    = optional(string, "IPv4")    // IPv4 | IPv6
+      private_ip_address            = optional(string)
+    }))
+    tags = optional(map(string), {})
   }))
   default = {}
 }
@@ -143,3 +165,4 @@ variable "network_route_tables" {
   }))
   default = {}
 }
+
