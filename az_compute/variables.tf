@@ -61,9 +61,9 @@ variable "windows_virtual_machines" {
       version   = optional(string, "latest")
     }), {})
     plan = optional(object({
-      name      = optional(string)
-      publisher = optional(string)
-      product   = optional(string)
+      name      = optional(string, "")
+      publisher = optional(string, "")
+      product   = optional(string, "")
     }), {})
     license_type          = optional(string, "None") // on-premise license aka Azure Hybrid Use Benefit - None, Windows_Client and Windows_Server
     network_interface_ids = optional(list(string), [])
