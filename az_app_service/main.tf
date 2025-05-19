@@ -26,8 +26,9 @@ resource "azurerm_linux_function_app" "linux_function_apps" {
     tags = each.value.tags
     
     site_config {
+
         application_stack {
-        node_version = coalesce(each.value.site_config.application_stack.node_version, null)
+        node_version = coalesce(each.value.site_config.application_stack.node_version, "")
         }
     
         application_insights_connection_string = each.value.site_config.application_insights_connection_string
