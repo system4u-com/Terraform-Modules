@@ -39,7 +39,7 @@ resource "azurerm_linux_function_app" "linux_function_apps" {
     }
     
     lifecycle {
-        ignore_changes = [for change in coalesce(each.value.lifecycle.ignore_changes, []) : change]
+        ignore_changes = []
     }
   
 }
