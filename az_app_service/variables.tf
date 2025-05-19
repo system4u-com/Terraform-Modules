@@ -26,9 +26,9 @@ variable "linux_function_apps" {
     })
     location = optional(string) // Location of the Function App, if not specified, it will use the location of the resource group
     tags     = optional(map(string), {})
-    storage_account = object({
+    storage_account = optional(object({
       name = string
-    })
+    }))
     storage_account_access_key = optional(string)
     storage_uses_managed_identity = optional(bool, true)
     service_plan = object({
