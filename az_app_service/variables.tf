@@ -12,7 +12,8 @@ variable "linux_function_apps" {
     storage_account = object({
       name = string
     })
-    storage_account_access_key = string
+    storage_account_access_key = optional(string)
+    storage_uses_managed_identity = optional(bool, true)
     service_plan = object({
       id = string
     })
