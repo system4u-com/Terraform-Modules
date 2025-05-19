@@ -1,18 +1,18 @@
 variable "service_plans" {
-    description = "App Service Plans"
-    type = map(object({
-        name     = optional(string)
-        resource_group = object({
-            id       = string
-            name     = string
-            location = string
-        })
-        location = optional(string) // Location of the App Service Plan, if not specified, it will use the location of the resource group
-        os_type  = optional(string, "Linux")
-        sku_name = optional(string, "Y1")
-        tags = optional(map(string), {})
-    }))
-    default = {}
+  description = "App Service Plans"
+  type = map(object({
+    name = optional(string)
+    resource_group = object({
+      id       = string
+      name     = string
+      location = string
+    })
+    location = optional(string) // Location of the App Service Plan, if not specified, it will use the location of the resource group
+    os_type  = optional(string, "Linux")
+    sku_name = optional(string, "Y1")
+    tags     = optional(map(string), {})
+  }))
+  default = {}
 }
 
 variable "linux_function_apps" {
@@ -27,28 +27,28 @@ variable "linux_function_apps" {
     location = optional(string) // Location of the Function App, if not specified, it will use the location of the resource group
     tags     = optional(map(string), {})
     storage_account = optional(object({
-      name = string
-    }))
-    storage_account_access_key = optional(string)
+      name = optional(string, "")
+    }), {})
+    storage_account_access_key    = optional(string)
     storage_uses_managed_identity = optional(bool, true)
     service_plan = object({
       id = string
     })
-    https_only   = optional(bool, false)
+    https_only   = optional(bool, true)
     app_settings = optional(map(string), {})
     site_config = optional(map(object({
       application_stack = optional(object({
-        node_version = optional(string)
-      }))
-      application_insights_connection_string = optional(string)
-    })))
+        node_version = optional(string, null)
+      }), {})
+      application_insights_connection_string = optional(string, "")
+    })), {})
     identity = optional(object({
-      type         = string
+      type         = optional(string, "")
       identity_ids = optional(list(string), [])
-    }))
+    }), {})
     lifecycle = optional(object({
       ignore_changes = optional(list(string), [])
-    }))
+    }), {})
   }))
   default = {}
 }
