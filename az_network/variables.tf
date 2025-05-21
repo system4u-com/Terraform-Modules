@@ -150,6 +150,7 @@ variable "network_interfaces" {
       name     = string
       location = string
     })
+    ip_forwarding_enabled           = optional(bool,false)
     ip_configurations = map(object({
       subnet_id                     = optional(string)
       public_ip_address_id          = optional(string)
