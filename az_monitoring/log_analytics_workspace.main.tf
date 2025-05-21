@@ -6,7 +6,7 @@ resource "azurerm_log_analytics_workspace" "log_analytics_workspaces" {
   resource_group_name = each.value.resource_group.name
   sku                 = each.value.sku
   retention_in_days   = each.value.retention_in_days
-  tags                = each.value
+  tags                = each.value.tags
 }
 
 resource "azurerm_sentinel_log_analytics_workspace_onboarding" "log_analytics_workspace_onboarding" {
