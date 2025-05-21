@@ -1,4 +1,4 @@
-variable "data_disks" {
+variable "managed_disks" {
   description = "Map of data disks per VM"
   type = map(object({
     resource_group_name = string

@@ -1,4 +1,4 @@
-resource "azurerm_managed_disk" "data_disks" {
+resource "azurerm_managed_disk" "managed_disks" {
   for_each = {
     for item in flatten([
       for vm_name, vm_data in var.data_disks : [
