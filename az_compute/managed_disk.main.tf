@@ -12,7 +12,7 @@ resource "azurerm_managed_disk" "managed_disks" {
 
 #Attach data disks to linux VMs
 resource "azurerm_virtual_machine_data_disk_attachment" "vm_data_disk_attachments" {
-  for_each           = var.vm_data_disks_attachments
+  for_each = var.vm_data_disks_attachments
 
   managed_disk_id    = each.value.managed_disk_id
   virtual_machine_id = each.value.virtual_machine_id
