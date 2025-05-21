@@ -1,4 +1,4 @@
-variable "network_route_tables" {
+variable "route_tables" {
   description = "Route Tables"
   type = map(object({
     resource_group = object({
