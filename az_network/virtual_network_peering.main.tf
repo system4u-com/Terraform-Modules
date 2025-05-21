@@ -1,5 +1,5 @@
-resource "azurerm_virtual_network_peering" "peerings" {
-  for_each = var.peerings
+resource "azurerm_virtual_network_peering" "virtual_network_peerings" {
+  for_each = var.virtual_network_peerings
 
   name                         = coalesce(each.value.name,each.key)
   resource_group_name          = each.value.resource_group.name

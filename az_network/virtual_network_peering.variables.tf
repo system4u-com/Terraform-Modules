@@ -1,4 +1,4 @@
-variable "peerings" {
+variable "virtual_network_peerings" {
   description = "Virtual Network Peering"
   type = map(object({
     name = optional(string)

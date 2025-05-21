@@ -1,6 +1,6 @@
-output "network_peerings" {
+output "virtual_network_peerings" {
   value = {
-    for k, value in azurerm_virtual_network_peering.peerings : k => {
+    for k, value in azurerm_virtual_network_peering.virtual_network_peerings : k => {
       id                        = value.id
       name                      = value.name
       resource_group_name       = value.resource_group_name
