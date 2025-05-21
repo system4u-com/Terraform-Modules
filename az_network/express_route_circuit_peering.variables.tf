@@ -1,28 +1,3 @@
-variable "express_route_circuits" {
-  description = "Express Route Circuits"
-  type = map(object({
-    name     = optional(string)
-    location = optional(string) // Location of the gateway, if not specified, it will use the location of the resource group
-    resource_group = object({
-      id       = string
-      name     = string
-      location = string
-    })
-    service_provider_name    = optional(string)
-    peering_location         = optional(string)
-    bandwidth_in_mbps        = optional(number)
-    express_route_port_id    = optional(string)
-    bandwidth_in_gbps        = optional(number)
-    allow_classic_operations = optional(bool, false)
-    sku = object({
-      tier   = string
-      family = string
-    })
-    tags = optional(map(string), {})
-  }))
-  default = {}
-}
-
 variable "express_route_circuit_peerings" {
   description = "Express Route Circuit Peerings"
   type = map(object({
