@@ -10,6 +10,16 @@ variable "log_analytics_workspaces" {
     name                = optional(string) // Name of the Log Analytics Workspace, if not specified, it will use the key of the map
     sku                 = optional(string, "PerGB2018")
     retention_in_days   = optional(number, 30)
+    tags                = optional(map(string), {})
+  }))
+  default = {}
+}
+
+variable "log_analytics_workspace_onboarding" {
+  description = "Security Insights Sentinel Onboarding"
+  type = map(object({
+    workspace_id                 = string
+    customer_managed_key_enabled = optional(bool, false)
   }))
   default = {}
 }
