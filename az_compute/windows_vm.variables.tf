@@ -7,6 +7,7 @@ variable "windows_virtual_machines" {
       location = string
     })
     location       = optional(string) // Location of the VM, if not specified, it will use the location of the resource group
+    name           = optional(string)
     size           = optional(string, "Standard_B2s")
     admin_username = optional(string, "adminuser")
     admin_password = optional(string, "Ch@ng3m3!")

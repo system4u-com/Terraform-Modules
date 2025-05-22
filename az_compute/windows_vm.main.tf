@@ -1,9 +1,10 @@
 resource "azurerm_windows_virtual_machine" "windows_vms" {
   for_each = var.windows_virtual_machines
 
-  name                  = each.key
   resource_group_name   = each.value.resource_group.name
   location              = coalesce(each.value.location, each.value.resource_group.location) // Use the location from the resource group if not specified
+  name                  = coalesce(each.value.name, each.key) // Use the key as the name if not specified
+  
   size                  = each.value.size
   admin_username        = each.value.admin_username
   admin_password        = each.value.admin_password
