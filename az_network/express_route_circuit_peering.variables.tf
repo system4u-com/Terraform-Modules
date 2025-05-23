@@ -19,6 +19,12 @@ variable "express_route_circuit_peerings" {
     secondary_peer_address_prefix = optional(string)
     ipv4_enabled                  = optional(bool, true)
     vlan_id                       = optional(number)
+    microsoft_peering_config = optional(object({
+      advertised_public_prefixes = optional(list(string), [])
+      advertised_communities     = optional(list(string), [])
+      customer_asn               = optional(number, 0)
+      routing_registry_name      = optional(string, "NONE")
+    }), null)
   }))
   default = {}
 }
