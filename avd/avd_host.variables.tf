@@ -24,6 +24,8 @@ variable "hosts" {
       version   = optional(string, "latest")
     }), {})
     license_type = optional(string, "None")
+    domain_join_type = optional(string, "entra-join")
+    host_pool_name = optional(string)
     tags         = optional(map(string), {})
   }))
   default = {}
