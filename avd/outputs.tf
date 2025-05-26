@@ -1,6 +1,16 @@
-output "hworkspaces" {
+output "workspaces" {
   value = {
     for k, value in azurerm_virtual_desktop_workspace.avd_workspaces : k => {
+      id       = value.id
+      name     = value.name
+      location = value.location
+    }
+  }
+}
+
+output "application_groups" {
+  value = {
+    for k, value in azurerm_virtual_desktop_application_group.avd_application_groups : k => {
       id       = value.id
       name     = value.name
       location = value.location
