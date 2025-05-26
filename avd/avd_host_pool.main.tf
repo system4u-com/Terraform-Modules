@@ -14,3 +14,10 @@ resource "azurerm_virtual_desktop_host_pool" "avd_host_pools" {
   load_balancer_type       = each.value.load_balancer_type
   tags                     = merge(var.default_tags, each.value.tags)
 }
+
+resource "azurerm_virtual_desktop_host_pool_registration_info" "avd_host_pool_registration_info" {
+  for_each = var.host_pools
+
+  hostpool_id     = azurerm_virtual_desktop_host_pool.avd_host_pools[each.key].id
+  expiration_date = timeadd(timestamp(), "24h")
+}
