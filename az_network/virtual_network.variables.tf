@@ -6,11 +6,11 @@ variable "virtual_networks" {
       name     = string
       location = string
     })
+    name          = optional(string)
     address_space = list(string)
     dns_servers   = optional(list(string), [])
     tags          = optional(map(string), {})
     monitoring = optional(object({
-      enabled                    = optional(bool, true)
       log_analytics_workspace_id = optional(string)
       log_category               = optional(string)
       log_category_group         = optional(string)
