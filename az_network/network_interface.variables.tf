@@ -1,6 +1,7 @@
 variable "network_interfaces" {
   description = "Network Interfaces"
   type = map(object({
+    name = optional(string)
     resource_group = object({
       id       = string
       name     = string
@@ -15,6 +16,11 @@ variable "network_interfaces" {
       private_ip_address            = optional(string)
     }))
     tags = optional(map(string), {})
+    monitoring = optional(object({
+      log_analytics_workspace_id = optional(string)
+      metrics_enabled            = optional(bool, true)
+      metrics                    = optional(string)
+    }), {})
   }))
   default = {}
 }

@@ -8,3 +8,16 @@ output "network_interfaces" {
     }
   }
 }
+
+output "network_interfaces_monitoring" {
+  value = {
+    for k, value in azurerm_monitor_diagnostic_setting.network_interface_monitoring : k => {
+      id                        = value.id
+      name                      = value.name
+      target_resource_id        = value.target_resource_id
+      log_analytics_workspace_id = value.log_analytics_workspace_id
+      metrics                   = value.metric
+    }
+  }
+  
+}
