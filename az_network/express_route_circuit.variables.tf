@@ -19,6 +19,13 @@ variable "express_route_circuits" {
       family = string
     })
     tags = optional(map(string), {})
+    monitoring = optional(object({
+      log_analytics_workspace_id = optional(string)
+      log_category               = optional(string)
+      log_category_group         = optional(string)
+      metrics_enabled            = optional(bool, true)
+      metrics                    = optional(string)
+    }), {})
   }))
   default = {}
 }
