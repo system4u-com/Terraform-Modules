@@ -14,6 +14,7 @@ variable "virtual_networks" {
       log_analytics_workspace_id = optional(string)
       log_category               = optional(string)
       log_category_group         = optional(string)
+      metrics_enabled            = optional(bool, true)
       metrics                    = optional(string)
     }), {})
   }))

@@ -27,5 +27,6 @@ resource "azurerm_monitor_diagnostic_setting" "virtual_networks_monitoring" {
 
   metric {
     category = coalesce(each.value.monitoring.metrics, "AllMetrics")
+    enabled = each.value.monitoring.metrics_enabled
   }
 }
