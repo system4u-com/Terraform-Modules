@@ -1,7 +1,7 @@
 resource "azurerm_network_security_group" "network_security_groups" {
   for_each = var.network_security_groups
 
-  name                = each.key
+  name                = coalesce(each.value.name, each.key)
   location            = each.value.resource_group.location
   resource_group_name = each.value.resource_group.name
   tags                = each.value.tags
@@ -39,4 +39,30 @@ resource "azurerm_network_interface_security_group_association" "network_securit
 
   network_interface_id      = each.value.nic_association.id
   network_security_group_id = azurerm_network_security_group.network_security_groups[each.key].id
+}
+
+resource "azurerm_monitor_diagnostic_setting" "network_security_group_monitoring" {
+  for_each = var.monitoring_enabled ? (
+    length(var.monitoring_included_resources) > 0 ?
+      { for k, v in var.network_security_groups : k => v if contains(var.monitoring_included_resources, coalesce(v.name, k)) } :
+      { for k, v in var.network_security_groups : k => v if !contains(var.monitoring_excluded_resources, coalesce(v.name, k)) }
+  ) : {}
+
+  name               = "${each.key}-diagnostic-setting"
+  target_resource_id = azurerm_network_security_group.network_security_groups[each.key].id
+  log_analytics_workspace_id = coalesce(each.value.monitoring.log_analytics_workspace_id, var.log_analytics_workspace_id)
+
+  enabled_log {
+    category = each.value.monitoring.log_category
+    category_group = (
+      each.value.monitoring.log_category == null || each.value.monitoring.log_category == "" ?
+      coalesce(each.value.monitoring.log_category_group, "allLogs") :
+      null
+    )
+  }
+
+  metric {
+    category = coalesce(each.value.monitoring.metrics, "AllMetrics")
+    enabled = each.value.monitoring.metrics_enabled
+  }
 }
