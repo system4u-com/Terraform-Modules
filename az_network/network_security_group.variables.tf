@@ -6,6 +6,7 @@ variable "network_security_groups" {
       name     = string
       location = string
     })
+    name = optional(string)
     subnet_association = optional(object({
       id = string
     }), null)
@@ -28,6 +29,11 @@ variable "network_security_groups" {
       destination_port_ranges      = optional(list(string))
       description                  = optional(string)
     })), {})
+    monitoring = optional(object({
+      monitoring_log_analytics_workspace_id = optional(string)
+      log_category               = optional(string)
+      log_category_group         = optional(string)
+    }), {})
   }))
   default = {}
 }

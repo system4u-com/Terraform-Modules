@@ -12,6 +12,12 @@ variable "virtual_network_gateway_connections" {
     virtual_network_gateway_id = string
     express_route_circuit_id   = optional(string) // Optional, if not specified, it will not be used
     tags                       = optional(map(string), {})
+    monitoring = optional(object({
+      monitoring_log_analytics_workspace_id = optional(string)
+      metrics_enabled            = optional(bool, true)
+      metrics                    = optional(string)
+      }),{})
   }))
   default = {}
 }
+
