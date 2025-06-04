@@ -15,7 +15,7 @@ output "network_interfaces_monitoring" {
       id                        = value.id
       name                      = value.name
       target_resource_id        = value.target_resource_id
-      log_analytics_workspace_id = value.log_analytics_workspace_id
+      monitoring_log_analytics_workspace_id = value.log_analytics_workspace_id
       metrics                   = value.metric
     }
   }

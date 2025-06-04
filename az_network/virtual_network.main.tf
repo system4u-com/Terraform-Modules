@@ -18,7 +18,7 @@ resource "azurerm_monitor_diagnostic_setting" "virtual_networks_monitoring" {
 
   name               = "${each.key}-diagnostic-setting"
   target_resource_id = azurerm_virtual_network.virtual_networks[each.key].id
-  log_analytics_workspace_id = coalesce(each.value.monitoring.log_analytics_workspace_id, var.log_analytics_workspace_id)
+  log_analytics_workspace_id = coalesce(each.value.monitoring.monitoring_log_analytics_workspace_id, var.monitoring_log_analytics_workspace_id)
 
   enabled_log {
     category = each.value.monitoring.log_category

@@ -28,7 +28,7 @@ resource "azurerm_monitor_diagnostic_setting" "express_route_circuit_monitoring"
 
   name               = "${each.key}-diagnostic-setting"
   target_resource_id = azurerm_express_route_circuit.express_route_circuits[each.key].id
-  log_analytics_workspace_id = coalesce(each.value.monitoring.log_analytics_workspace_id, var.log_analytics_workspace_id)
+  log_analytics_workspace_id = coalesce(each.value.monitoring.monitoring_log_analytics_workspace_id, var.monitoring_log_analytics_workspace_id)
 
   enabled_log {
     category = each.value.monitoring.log_category

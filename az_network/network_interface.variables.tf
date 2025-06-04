@@ -17,7 +17,7 @@ variable "network_interfaces" {
     }))
     tags = optional(map(string), {})
     monitoring = optional(object({
-      log_analytics_workspace_id = optional(string)
+      monitoring_log_analytics_workspace_id = optional(string)
       metrics_enabled            = optional(bool, true)
       metrics                    = optional(string)
     }), {})

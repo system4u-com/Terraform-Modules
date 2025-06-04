@@ -14,7 +14,7 @@ output "virtual_network_gateways_monitoring" {
       id                        = value.id
       name                      = value.name
       target_resource_id        = value.target_resource_id
-      log_analytics_workspace_id = value.log_analytics_workspace_id
+      monitoring_log_analytics_workspace_id = value.log_analytics_workspace_id
       logs                      = value.enabled_log
       metrics                   = value.metric
     }
