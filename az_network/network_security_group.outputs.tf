@@ -27,7 +27,6 @@ output "network_security_groups_monitoring" {
       target_resource_id        = value.target_resource_id
       log_analytics_workspace_id = value.log_analytics_workspace_id
       logs                      = value.enabled_log
-      metrics                   = value.metric
     }
   }
 }

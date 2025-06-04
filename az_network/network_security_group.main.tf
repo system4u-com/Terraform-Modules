@@ -60,9 +60,4 @@ resource "azurerm_monitor_diagnostic_setting" "network_security_group_monitoring
       null
     )
   }
-
-  metric {
-    category = coalesce(each.value.monitoring.metrics, "AllMetrics")
-    enabled = each.value.monitoring.metrics_enabled
-  }
 }
