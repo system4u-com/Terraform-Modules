@@ -19,7 +19,7 @@ resource "azurerm_express_route_circuit" "express_route_circuits" {
   tags = each.value.tags
 }
 
-resource "azurerm_monitor_diagnostic_setting" "express_route_circuit_monitoring" {
+resource "azurerm_monitor_diagnostic_setting" "express_route_circuits_monitoring" {
   for_each = var.monitoring_enabled ? (
     length(var.monitoring_included_resources) > 0 ?
       { for k, v in var.express_route_circuits : k => v if contains(var.monitoring_included_resources, coalesce(v.name, k)) } :

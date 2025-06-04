@@ -10,7 +10,7 @@ output "virtual_network_gateways" {
 
 output "virtual_network_gateways_monitoring" {
   value = {
-    for k, value in azurerm_monitor_diagnostic_setting.virtual_networks_monitoring : k => {
+    for k, value in azurerm_monitor_diagnostic_setting.virtual_network_gateways_monitoring : k => {
       id                        = value.id
       name                      = value.name
       target_resource_id        = value.target_resource_id

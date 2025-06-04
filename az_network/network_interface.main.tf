@@ -21,7 +21,7 @@ resource "azurerm_network_interface" "network_interfaces" {
   tags = each.value.tags
 }
 
-resource "azurerm_monitor_diagnostic_setting" "network_interface_monitoring" {
+resource "azurerm_monitor_diagnostic_setting" "network_interfaces_monitoring" {
   for_each = var.monitoring_enabled ? (
     length(var.monitoring_included_resources) > 0 ?
       { for k, v in var.network_interfaces : k => v if contains(var.monitoring_included_resources, coalesce(v.name, k)) } :

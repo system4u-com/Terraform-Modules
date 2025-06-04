@@ -11,7 +11,7 @@ output "network_interfaces" {
 
 output "network_interfaces_monitoring" {
   value = {
-    for k, value in azurerm_monitor_diagnostic_setting.network_interface_monitoring : k => {
+    for k, value in azurerm_monitor_diagnostic_setting.network_interfaces_monitoring : k => {
       id                        = value.id
       name                      = value.name
       target_resource_id        = value.target_resource_id

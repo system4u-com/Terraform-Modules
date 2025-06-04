@@ -21,7 +21,7 @@ output "network_security_rules" {
 
 output "network_security_groups_monitoring" {
   value = {
-    for k, value in azurerm_monitor_diagnostic_setting.network_security_group_monitoring : k => {
+    for k, value in azurerm_monitor_diagnostic_setting.network_security_groups_monitoring : k => {
       id                        = value.id
       name                      = value.name
       target_resource_id        = value.target_resource_id
