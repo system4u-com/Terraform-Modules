@@ -36,9 +36,12 @@ resource "azurerm_monitor_diagnostic_setting" "storage_accounts_monitoring" {
   target_resource_id         = azurerm_storage_account.storage_accounts[each.key].id
   log_analytics_workspace_id = coalesce(each.value.monitoring.monitoring_log_analytics_workspace_id, var.monitoring_log_analytics_workspace_id)
 
-  metric {
-    category = coalesce(each.value.monitoring.metrics, "Transaction")
-    enabled  = each.value.monitoring.metrics_enabled
+  dynamic "metric" {
+    for_each = each.value.monitoring.file.metrics != null ? each.value.monitoring.file.metrics : []
+    content {
+      category = metric.value
+      enabled  = each.value.monitoring.file.metrics_enabled
+    }
   }
 }
 
@@ -61,12 +64,14 @@ resource "azurerm_monitor_diagnostic_setting" "storage_accounts_blobs_monitoring
       null
     )
   }
-  metric {
-    category = coalesce(each.value.monitoring.blob.metrics, "Transaction")
-    enabled  = each.value.monitoring.blob.metrics_enabled
+  dynamic "metric" {
+    for_each = each.value.monitoring.file.metrics != null ? each.value.monitoring.file.metrics : []
+    content {
+      category = metric.value
+      enabled  = each.value.monitoring.file.metrics_enabled
+    }
   }
 }
-
 resource "azurerm_monitor_diagnostic_setting" "storage_accounts_queues_monitoring" {
   for_each = var.monitoring_enabled ? (
     length(var.monitoring_included_resources) > 0 ?
@@ -86,9 +91,17 @@ resource "azurerm_monitor_diagnostic_setting" "storage_accounts_queues_monitorin
       null
     )
   }
-  metric {
-    category = coalesce(each.value.monitoring.queue.metrics, "Transaction")
-    enabled  = each.value.monitoring.queue.metrics_enabled
+  dynamic "metric" {
+    for_each = each.value.monitoring.file.metrics != null ? each.value.monitoring.file.metrics : []
+    content {
+      category = metric.value
+      enabled  = each.value.monitoring.file.metrics_enabled
+    }
+  }
+  lifecycle {
+    ignore_changes = [
+      metric
+    ]
   }
 }
 
@@ -111,10 +124,14 @@ resource "azurerm_monitor_diagnostic_setting" "storage_accounts_tables_monitorin
       null
     )
   }
-  metric {
-    category = coalesce(each.value.monitoring.table.metrics, "Transaction")
-    enabled  = each.value.monitoring.table.metrics_enabled
+  dynamic "metric" {
+    for_each = each.value.monitoring.file.metrics != null ? each.value.monitoring.file.metrics : []
+    content {
+      category = metric.value
+      enabled  = each.value.monitoring.file.metrics_enabled
+    }
   }
+
 }
 
 resource "azurerm_monitor_diagnostic_setting" "storage_accounts_files_monitoring" {
@@ -136,8 +153,11 @@ resource "azurerm_monitor_diagnostic_setting" "storage_accounts_files_monitoring
       null
     )
   }
-  metric {
-    category = coalesce(each.value.monitoring.file.metrics, "Transaction")
-    enabled  = each.value.monitoring.file.metrics_enabled
+  dynamic "metric" {
+    for_each = each.value.monitoring.file.metrics != null ? each.value.monitoring.file.metrics : []
+    content {
+      category = metric.value
+      enabled  = each.value.monitoring.file.metrics_enabled
+    }
   }
 }
