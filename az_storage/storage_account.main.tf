@@ -43,6 +43,11 @@ resource "azurerm_monitor_diagnostic_setting" "storage_accounts_monitoring" {
       enabled  = each.value.monitoring.file.metrics_enabled
     }
   }
+  lifecycle {
+    ignore_changes = [
+      metric
+    ]
+  }
 }
 
 resource "azurerm_monitor_diagnostic_setting" "storage_accounts_blobs_monitoring" {
@@ -70,6 +75,11 @@ resource "azurerm_monitor_diagnostic_setting" "storage_accounts_blobs_monitoring
       category = metric.value
       enabled  = each.value.monitoring.file.metrics_enabled
     }
+  }
+  lifecycle {
+    ignore_changes = [
+      metric
+    ]
   }
 }
 resource "azurerm_monitor_diagnostic_setting" "storage_accounts_queues_monitoring" {
@@ -131,6 +141,11 @@ resource "azurerm_monitor_diagnostic_setting" "storage_accounts_tables_monitorin
       enabled  = each.value.monitoring.file.metrics_enabled
     }
   }
+  lifecycle {
+    ignore_changes = [
+      metric
+    ]
+  }
 
 }
 
@@ -159,5 +174,10 @@ resource "azurerm_monitor_diagnostic_setting" "storage_accounts_files_monitoring
       category = metric.value
       enabled  = each.value.monitoring.file.metrics_enabled
     }
+  }
+  lifecycle {
+    ignore_changes = [
+      metric
+    ]
   }
 }
