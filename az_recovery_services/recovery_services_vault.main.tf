@@ -17,15 +17,15 @@ data "azurerm_monitor_diagnostic_categories" "recovery_services_vaults_diagnosti
   resource_id = azurerm_recovery_services_vault.recovery_services_vaults[each.key].id
 }
 
-resource "azurerm_monitor_diagnostic_setting" "recovery_services_vaults_monitoring" {
-  for_each = var.recovery_services_vaults
+resource "azurerm_monitor_diagnostic_setting" "recovery_services_vaults_diagnostic_settings" {
+  for_each = var.default_diagnostic_setting_logs_enabled || var.default_diagnostic_setting_metrics_enabled ? var.recovery_services_vaults : {}
 
-  name               = "Global-Diagnostic-Setting"
+  name               = "Default-Diagnostic-Setting"
   target_resource_id = azurerm_recovery_services_vault.recovery_services_vaults[each.key].id
-  log_analytics_workspace_id = var.default_monitoring_log_analytics_workspace_id
+  log_analytics_workspace_id = var.default_diagnostic_setting_log_analytics_workspace_id
 
   dynamic "enabled_log" {
-    for_each = data.azurerm_monitor_diagnostic_categories.recovery_services_vaults_diagnostic_categories[each.key].log_category_types
+    for_each = var.default_diagnostic_setting_logs_enabled ? data.azurerm_monitor_diagnostic_categories.recovery_services_vaults_diagnostic_categories[each.key].log_category_types : []
 
     content {
       category = enabled_log.value
@@ -33,7 +33,7 @@ resource "azurerm_monitor_diagnostic_setting" "recovery_services_vaults_monitori
   }
 
   dynamic "metric" {
-    for_each = data.azurerm_monitor_diagnostic_categories.recovery_services_vaults_diagnostic_categories[each.key].metrics
+    for_each = var.default_diagnostic_setting_metrics_enabled ? data.azurerm_monitor_diagnostic_categories.recovery_services_vaults_diagnostic_categories[each.key].metrics : []
 
     content {
       category = metric.value
