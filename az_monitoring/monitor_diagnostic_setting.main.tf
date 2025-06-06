@@ -1,7 +1,7 @@
 resource "azurerm_monitor_diagnostic_setting" "monitor_diagnostic_settings" {
   for_each = var.custom_diagnostic_settings
 
-  name                       = each.value.name
+  name                       = "${var.custom_diagnostic_setting_name_prefix}${each.value.name}"
   target_resource_id         = each.value.resource_id
   log_analytics_workspace_id = each.value.log_analytics_workspace_id
 
