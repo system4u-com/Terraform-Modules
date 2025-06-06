@@ -10,12 +10,6 @@ variable "monitoring_enabled" {
   default     = false
 }
 
-variable "monitoring_included_resources" {
-  description = "List of resources to include in monitoring"
-  type        = list(string)
-  default     = []
-}
-
 variable "monitoring_excluded_resources" {
   description = "List of resources to exclude from monitoring"
   type = list(string)
