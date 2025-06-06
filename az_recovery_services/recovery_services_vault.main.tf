@@ -17,8 +17,14 @@ data "azurerm_monitor_diagnostic_categories" "recovery_services_vaults_diagnosti
   resource_id = azurerm_recovery_services_vault.recovery_services_vaults[each.key].id
 }
 
+locals {
+  recovery_services_vaults_monitoring_enabled = {
+    for k, v in azurerm_recovery_services_vault.recovery_services_vaults : k => v if !contains(var.default_diagnostic_setting_excluded_resources, v.id)
+  }
+}
+
 resource "azurerm_monitor_diagnostic_setting" "recovery_services_vaults_diagnostic_settings" {
-  for_each = var.default_diagnostic_setting_logs_enabled || var.default_diagnostic_setting_metrics_enabled ? var.recovery_services_vaults : {}
+  for_each = var.default_diagnostic_setting_logs_enabled || var.default_diagnostic_setting_metrics_enabled ? local.recovery_services_vaults_monitoring_enabled : {}
 
   name               = "Default-Diagnostic-Setting"
   target_resource_id = azurerm_recovery_services_vault.recovery_services_vaults[each.key].id

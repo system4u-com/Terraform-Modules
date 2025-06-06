@@ -1,4 +1,4 @@
-variable "monitor_diagnostic_settings" {
+variable "custom_diagnostic_settings" {
   description = "Diagnostic settings for resources"
   type = map(object({
     name                       = string
