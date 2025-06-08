@@ -16,11 +16,6 @@ variable "network_interfaces" {
       private_ip_address            = optional(string)
     }))
     tags = optional(map(string), {})
-    monitoring = optional(object({
-      monitoring_log_analytics_workspace_id = optional(string)
-      metrics_enabled            = optional(bool, true)
-      metrics                    = optional(string)
-    }), {})
   }))
   default = {}
 }
