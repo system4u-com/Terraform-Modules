@@ -16,13 +16,6 @@ variable "virtual_network_gateways" {
       private_ip_address_allocation = optional(string, "Dynamic") // The only value is Dynamic, Static is not supported
     }))
     tags = optional(map(string), {})
-    monitoring = optional(object({
-      monitoring_log_analytics_workspace_id = optional(string)
-      log_category               = optional(string)
-      log_category_group         = optional(string)
-      metrics_enabled            = optional(bool, true)
-      metrics                    = optional(string)
-    }), {})
   }))
   default = {}
 }
