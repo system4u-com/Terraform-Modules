@@ -19,14 +19,3 @@ output "network_security_rules" {
   }
 }
 
-output "network_security_groups_monitoring" {
-  value = {
-    for k, value in azurerm_monitor_diagnostic_setting.network_security_groups_monitoring : k => {
-      id                        = value.id
-      name                      = value.name
-      target_resource_id        = value.target_resource_id
-      monitoring_log_analytics_workspace_id = value.log_analytics_workspace_id
-      logs                      = value.enabled_log
-    }
-  }
-}
