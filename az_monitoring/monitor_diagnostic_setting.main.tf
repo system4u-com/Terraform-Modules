@@ -2,7 +2,7 @@ locals {
   diagnostic_settings_flattened = flatten([
     for key, value in var.diagnostic_settings : [
       for res in value.target_resource_ids : {
-        key                        = "${key}-${element(split("/", res), length(split("/", res)) - 1)}"
+        key                        = "${key}-${base64encode(res)}"
         name                       = value.name
         target_resource_id         = res
         log_analytics_workspace_id = value.log_analytics_workspace_id
