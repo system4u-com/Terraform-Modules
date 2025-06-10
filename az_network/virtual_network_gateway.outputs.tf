@@ -7,3 +7,4 @@ output "virtual_network_gateways" {
     }
   }
 }
+

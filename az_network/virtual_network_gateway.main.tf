@@ -18,3 +18,4 @@ resource "azurerm_virtual_network_gateway" "virtual_network_gateways" {
     }
   }
 }
+

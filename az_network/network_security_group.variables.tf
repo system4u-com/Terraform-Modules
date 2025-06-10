@@ -6,6 +6,7 @@ variable "network_security_groups" {
       name     = string
       location = string
     })
+    name = optional(string)
     subnet_association = optional(object({
       id = string
     }), null)

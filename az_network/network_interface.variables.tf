@@ -1,6 +1,7 @@
 variable "network_interfaces" {
   description = "Network Interfaces"
   type = map(object({
+    name = optional(string)
     resource_group = object({
       id       = string
       name     = string

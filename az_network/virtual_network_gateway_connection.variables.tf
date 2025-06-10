@@ -15,3 +15,4 @@ variable "virtual_network_gateway_connections" {
   }))
   default = {}
 }
+

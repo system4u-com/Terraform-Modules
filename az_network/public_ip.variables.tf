@@ -6,6 +6,7 @@ variable "public_ips" {
       name     = string
       location = string
     })
+    name              = optional(string)
     sku               = optional(string, "Standard")
     allocation_method = optional(string, "Static")
     domain_name_label = optional(string)

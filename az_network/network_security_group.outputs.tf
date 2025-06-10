@@ -18,3 +18,4 @@ output "network_security_rules" {
     }
   }
 }
+

@@ -8,3 +8,4 @@ output "network_interfaces" {
     }
   }
 }
+

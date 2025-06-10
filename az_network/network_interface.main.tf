@@ -1,7 +1,7 @@
 resource "azurerm_network_interface" "network_interfaces" {
   for_each = var.network_interfaces
 
-  name                  = each.key
+  name                  = coalesce(each.value.name, each.key)
   location              = each.value.resource_group.location
   resource_group_name   = each.value.resource_group.name
   ip_forwarding_enabled = each.value.ip_forwarding_enabled
@@ -20,3 +20,4 @@ resource "azurerm_network_interface" "network_interfaces" {
   
   tags = each.value.tags
 }
+

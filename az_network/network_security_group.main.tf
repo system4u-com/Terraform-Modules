@@ -1,7 +1,7 @@
 resource "azurerm_network_security_group" "network_security_groups" {
   for_each = var.network_security_groups
 
-  name                = each.key
+  name                = coalesce(each.value.name, each.key)
   location            = each.value.resource_group.location
   resource_group_name = each.value.resource_group.name
   tags                = each.value.tags
@@ -40,3 +40,4 @@ resource "azurerm_network_interface_security_group_association" "network_securit
   network_interface_id      = each.value.nic_association.id
   network_security_group_id = azurerm_network_security_group.network_security_groups[each.key].id
 }
+

@@ -8,3 +8,4 @@ output "public_ips" {
     }
   }
 }
+

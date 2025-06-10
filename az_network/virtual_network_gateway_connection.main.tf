@@ -10,3 +10,4 @@ resource "azurerm_virtual_network_gateway_connection" "virtual_network_gateway_c
   virtual_network_gateway_id = each.value.virtual_network_gateway_id
   express_route_circuit_id   = each.value.express_route_circuit_id
 }
+

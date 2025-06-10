@@ -3,9 +3,3 @@ variable "default_tags" {
   type        = map(string)
   default     = {}
 }
-
-variable "name_suffix_format" {
-  description = "Suffix for formatted host names"
-  type        = string
-  default     = "%02d"
-}
