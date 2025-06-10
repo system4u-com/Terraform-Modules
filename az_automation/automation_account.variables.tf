@@ -1,5 +1,5 @@
-variable "service_plans" {
-  description = "App Service Plans"
+variable "automation_accounts" {
+  description = "Azure Automation Accounts"
   type = map(object({
     name = optional(string)
     resource_group = object({
@@ -7,35 +7,14 @@ variable "service_plans" {
       name     = string
       location = string
     })
-    location = optional(string) // Location of the App Service Plan, if not specified, it will use the location of the resource group
-    os_type  = optional(string, "Linux")
-    sku_name = optional(string, "Y1")
+    location = optional(string) // Location of the Automation Account, if not specified, it will use the location of the resource group
+    sku_name = optional(string, "Free")
     tags     = optional(map(string), {})
+    identity = optional(object({
+      type         = optional(string) // Type of the identity, e.g., "SystemAssigned", "UserAssigned", "UserAssigned, SystemAssigned"
+      identity_ids = optional(map(string))
+    }), {}) 
   }))
   default = {}
-}
 
-variable "automation_accounts" {
-  description = "Azure Automation Accounts"
-  type = map(object({
-    name                = optional(string)
-    resource_group      = object({
-      id       = string
-      name     = string
-      location = string
-    })
-    location            = optional(string) // Location of the Automation Account, if not specified, it will use the location of the resource group
-    sku_name            = optional(string, "Basic")
-    tags                = optional(map(string), {})
-    monitoring          = optional(object({
-      enabled                    = optional(bool, true)
-      log_analytics_workspace_id = optional(string)
-      log_category               = optional(string)
-      log_category_group         = optional(string)
-      metrics_enabled            = optional(bool, true)
-      metrics                    = optional(string)
-    }), {})
-  }))
-  default = {}
-  
 }
