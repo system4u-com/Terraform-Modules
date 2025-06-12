@@ -4,7 +4,7 @@ output "storage_accounts" {
       id       = value.id
       name     = value.name
       location = value.location
-      primary_access_key = value.primary_access_key
+      #primary_access_key = value.primary_access_key
     }
   }
   
