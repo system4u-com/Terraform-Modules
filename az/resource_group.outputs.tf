@@ -7,3 +7,13 @@ output "resource_groups" {
     }
   }
 }
+
+output "unmanaged_resource_groups" {
+  value = {
+    for k, value in data.azurerm_resource_groups.unmanaged_resource_groups : k => {
+      id       = value.id
+      name     = value.name
+      location = value.location
+    }
+  }
+}
