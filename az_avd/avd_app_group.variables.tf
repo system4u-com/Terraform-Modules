@@ -11,6 +11,7 @@ variable "application_groups" {
     host_pool_id = string
     friendly_name = optional(string)
     description   = optional(string)
+    default_desktop_display_name = optional(string)
     tags         = optional(map(string), {})
   }))
   default = {}
