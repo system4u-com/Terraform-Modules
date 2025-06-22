@@ -13,7 +13,17 @@ variable "automation_accounts" {
     identity = optional(object({
       type         = optional(string) // Type of the identity, e.g., "SystemAssigned", "UserAssigned", "UserAssigned, SystemAssigned"
       identity_ids = optional(map(string))
-    }), {}) 
+    })) 
+    publish_content_link = optional(object({
+      uri = optional(string) // URI to the content to be published
+      version = optional(string) // Version of the content
+      content_hash = optional(object({
+        algorithm = optional(string) // Algorithm used for the content hash, e.g., "SHA256"
+        value     = optional(string) // The actual hash value
+      }))
+    }), {})
+    content = optional(string)
+    
   }))
   default = {}
 

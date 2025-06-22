@@ -1,6 +1,6 @@
-output "automation_accounts" {
+output "automation_schedules" {
   value = {
-    for k, value in azurerm_automation_account.automation_accounts : k => {
+    for k, value in azurerm_automation_schedule.automation_schedules : k => {
       id       = value.id
       name     = value.name
       location = value.location
