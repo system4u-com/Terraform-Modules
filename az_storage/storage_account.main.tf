@@ -9,6 +9,7 @@ resource "azurerm_storage_account" "storage_accounts" {
   account_replication_type   = each.value.account_replication_type
   access_tier                = each.value.access_tier
   https_traffic_only_enabled = each.value.https_traffic_only_enabled
+  allow_nested_items_to_be_public = each.value.allow_nested_items_to_be_public
 
 
   tags = each.value.tags

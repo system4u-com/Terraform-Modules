@@ -13,6 +13,7 @@ variable "storage_accounts" {
     account_replication_type   = optional(string, "LRS")
     access_tier                = optional(string, "Hot")
     https_traffic_only_enabled = optional(bool, true)
+    allow_nested_items_to_be_public = optional(bool, true)
     network_rules = optional(object({
       bypass         = optional(list(string), ["None"]) // None | Logging | Metrics | AzureServices
       default_action = optional(string, "Deny")         // Allow | Deny
