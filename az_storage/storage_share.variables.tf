@@ -7,7 +7,7 @@ variable "storage_shares" {
       id = string
     })
     quota               = optional(number, 100) // Quota in GiB, default is 100 GiB
-    access_tier         = optional(string, "Hot") // Access tier for the share, default is Hot
+    access_tier         = optional(string) // Access tier for the share, default is Hot
     metadata            = optional(map(string),{}) // Metadata for the share
     enabled_protocol = optional(string, "SMB") // Protocols enabled for the share, default is SMB
     acl = optional(map(object({
