@@ -11,4 +11,5 @@ variable "storage_syncs" {
     incoming_traffic_policy = optional(string, "AllowAllTraffic") // Possible values are AllowAllTraffic and AllowVirtualNetworksOnly
     tags                    = optional(map(string), {})           // Tags for the storage sync
   }))
+  default = {}
 }

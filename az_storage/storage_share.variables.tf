@@ -17,4 +17,5 @@ variable "storage_shares" {
         expiry = optional(string) // Expiry time for the ACL entry in ISO 8601
     })))
   }))
+  default = {}
 }

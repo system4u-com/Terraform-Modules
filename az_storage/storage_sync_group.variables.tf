@@ -6,4 +6,5 @@ variable "storage_sync_groups" {
       id       = string
     })
   }))
+  default = {}
 }
