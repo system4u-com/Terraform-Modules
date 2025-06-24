@@ -6,9 +6,9 @@ resource "azurerm_application_gateway" "application_gateways" {
   resource_group_name = each.value.resource_group.name
 
   sku {
-    name     = each.value.name
-    tier     = each.value.tier
-    capacity = each.value.capacity
+    name     = each.value.sku.name
+    tier     = each.value.sku.tier
+    capacity = each.value.sku.capacity
   }
 
   dynamic "gateway_ip_configuration" {

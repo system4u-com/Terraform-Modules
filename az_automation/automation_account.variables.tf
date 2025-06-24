@@ -8,7 +8,7 @@ variable "automation_accounts" {
       location = string
     })
     location = optional(string) // Location of the Automation Account, if not specified, it will use the location of the resource group
-    sku_name = optional(string, "Free")
+    sku_name = optional(string, "Basic")
     tags     = optional(map(string), {})
     identity = optional(object({
       type         = optional(string) // Type of the identity, e.g., "SystemAssigned", "UserAssigned", "UserAssigned, SystemAssigned"
