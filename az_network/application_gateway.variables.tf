@@ -16,15 +16,15 @@ variable "application_gateways" {
     gateway_ip_configurations = map(object({
       subnet_id = optional(string)
     }))
-    frontend_ports = object({
+    frontend_ports = map(object({
       port = optional(string)
-    })
+    }))
     frontend_ip_configurations = map(object({
       private_ip_address            = optional(string)
       private_ip_address_allocation = optional(string)
     }))
     backend_address_pools = map(object({
-      ip_addresses = optional(string)
+      ip_addresses = optional(list(string))
     }))
     backend_http_settings = map(object({
       cookie_based_affinity = optional(string)
