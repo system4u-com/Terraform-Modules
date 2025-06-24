@@ -19,13 +19,19 @@ variable "container_app_jobs" {
     }), {})
     identity = optional(object({
       type = optional(string, "SystemAssigned")
-      user_assigned_identity_ids = optional(list(string), [])
+      identity_ids = optional(list(string), [])
     }), {})
     registry = optional(object({
       server = optional(string)
       username = optional(string)
       password_secret_name = optional(string)
     }), {})
+    secrets = optional(map(object({
+      name = optional(string)
+      identity = optional(string)
+      key_vault_secret_id = optional(string)
+      value = optional(string)
+    })), {})
     template = object({
       container = optional(object({
         name = optional(string)

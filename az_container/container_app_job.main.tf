@@ -22,6 +22,15 @@ resource "azurerm_container_app_job" "container_app_jobs" {
     username             = each.value.registry.username
     password_secret_name = each.value.registry.password_secret_name
   }
+  dynamic "secret" {
+    for_each = each.value.secrets == null ? [] : [for k, v in each.value.secrets : merge({ name = k }, v != null ? v : {})]
+    content {
+      name                = secret.value.name
+      identity            = secret.value.identity
+      key_vault_secret_id = secret.value.key_vault_secret_id
+      value               = secret.value.value
+    }
+  }
   template {
     container {
       name   = each.value.template.container.name
