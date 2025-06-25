@@ -22,6 +22,7 @@ variable "application_gateways" {
     frontend_ip_configurations = map(object({
       private_ip_address            = optional(string)
       private_ip_address_allocation = optional(string)
+      public_ip_address_id          = optional(string)
     }))
     backend_address_pools = map(object({
       ip_addresses = optional(list(string))
@@ -45,6 +46,15 @@ variable "application_gateways" {
       backend_address_pool_name  = optional(string)
       backend_http_settings_name = optional(string)
     }))
+    waf_configuration = object({
+      enabled             = bool
+      firewall_mode       = string
+      rule_set_type       = optional(string)
+      rule_set_version    = optional(string)
+      # disabled_rule_group = object ({
+      #   rule_group_name   = optional(string)
+      # })
+    })
     tags = optional(map(string), {})
   }))
   default = {}

@@ -33,6 +33,7 @@ resource "azurerm_application_gateway" "application_gateways" {
       name                          = frontend_ip_configuration.key
       private_ip_address            = frontend_ip_configuration.value.private_ip_address
       private_ip_address_allocation = frontend_ip_configuration.value.private_ip_address_allocation
+      public_ip_address_id          = frontend_ip_configuration.value.public_ip_address_id
     }
   }
 
@@ -76,5 +77,15 @@ resource "azurerm_application_gateway" "application_gateways" {
       backend_address_pool_name  = request_routing_rule.value.backend_address_pool_name
       backend_http_settings_name = request_routing_rule.value.backend_http_settings_name
     }
+  }
+
+  waf_configuration {
+    enabled             = each.value.waf_configuration.enabled
+    firewall_mode       = each.value.waf_configuration.firewall_mode
+    rule_set_type       = each.value.waf_configuration.rule_set_type
+    rule_set_version    = each.value.waf_configuration.rule_set_version
+    # disabled_rule_group {
+    #   rule_group_name = disabled_rule_group.rule_group_name.value
+    # }
   }
 }
