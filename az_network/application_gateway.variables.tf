@@ -23,6 +23,7 @@ variable "application_gateways" {
       private_ip_address            = optional(string)
       private_ip_address_allocation = optional(string)
       public_ip_address_id          = optional(string)
+      subnet_id                     = optional(string)
     }))
     backend_address_pools = map(object({
       ip_addresses = optional(list(string))

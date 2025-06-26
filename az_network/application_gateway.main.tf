@@ -34,6 +34,7 @@ resource "azurerm_application_gateway" "application_gateways" {
       private_ip_address            = frontend_ip_configuration.value.private_ip_address
       private_ip_address_allocation = frontend_ip_configuration.value.private_ip_address_allocation
       public_ip_address_id          = frontend_ip_configuration.value.public_ip_address_id
+      subnet_id                     = frontend_ip_configuration.value.subnet_id
     }
   }
 
