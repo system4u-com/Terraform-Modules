@@ -39,19 +39,38 @@ variable "application_gateways" {
       frontend_ip_configuration_name = optional(string)
       frontend_port_name             = optional(string)
       protocol                       = optional(string)
+      require_sni                    = optional(bool, false)
+      host_name                      = optional(string)
+      ssl_certificate_name           = optional(string)
     }))
     request_routing_rules = map(object({
-      priority                   = optional(string)
-      rule_type                  = optional(string)
-      http_listener_name         = optional(string)
-      backend_address_pool_name  = optional(string)
-      backend_http_settings_name = optional(string)
+      priority                    = optional(string)
+      rule_type                   = optional(string)
+      http_listener_name          = optional(string)
+      backend_address_pool_name   = optional(string)
+      backend_http_settings_name  = optional(string)
+      redirect_configuration_name = optional(string)
+    }))
+    redirect_configurations = map(object({
+      redirect_type        = string(optional)
+      target_listener_name = string(optional)
+      include_path         = string(bool)
+      include_query_string = string(bool)
+    }))
+    rewrite_rule_set = map(object({
+      rewrite_rule = map(object({
+        rule_sequence = string(optional)
+        response_header_configuration = map(object({
+          header_name = string(optional)
+          header_value = string(optional)
+        }))
+      }))
     }))
     waf_configuration = object({
-      enabled             = bool
-      firewall_mode       = string
-      rule_set_type       = optional(string)
-      rule_set_version    = optional(string)
+      enabled          = bool
+      firewall_mode    = string
+      rule_set_type    = optional(string)
+      rule_set_version = optional(string)
       # disabled_rule_group = object ({
       #   rule_group_name   = optional(string)
       # })

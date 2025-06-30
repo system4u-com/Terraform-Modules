@@ -65,26 +65,64 @@ resource "azurerm_application_gateway" "application_gateways" {
       frontend_ip_configuration_name = http_listener.value.frontend_ip_configuration_name
       frontend_port_name             = http_listener.value.frontend_port_name
       protocol                       = http_listener.value.protocol
+      require_sni                    = http_listener.value.require_sni
+      host_name                      = http_listener.value.host_name
+      ssl_certificate_name           = http_listener.value.ssl_certificate_name
     }
   }
 
   dynamic "request_routing_rule" {
     for_each = each.value.request_routing_rules
     content {
-      name                       = request_routing_rule.key
-      priority                   = request_routing_rule.value.priority
-      rule_type                  = request_routing_rule.value.rule_type
-      http_listener_name         = request_routing_rule.value.http_listener_name
-      backend_address_pool_name  = request_routing_rule.value.backend_address_pool_name
-      backend_http_settings_name = request_routing_rule.value.backend_http_settings_name
+      name                        = request_routing_rule.key
+      priority                    = request_routing_rule.value.priority
+      rule_type                   = request_routing_rule.value.rule_type
+      http_listener_name          = request_routing_rule.value.http_listener_name
+      backend_address_pool_name   = request_routing_rule.value.backend_address_pool_name
+      backend_http_settings_name  = request_routing_rule.value.backend_http_settings_name
+      redirect_configuration_name = request_routing_rule.value.redirect_configuration_name
+    }
+  }
+
+  dynamic "redirect_configuration" {
+    for_each = each.value.redirect_configuration
+    content {
+      name                 = redirect_configuration.key
+      redirect_type        = redirect_configuration.value.redirect_type
+      target_listener_name = redirect_configuration.value.target_listener_name
+      include_path         = redirect_configuration.value.include_path
+      include_query_string = redirect_configuration.value.include_query_string
+    }
+  }
+
+  dynamic "rewrite_rule_set" {
+    for_each = each.value.rewrite_rule_set
+    content {
+      name                 = rewrite_rule_set.key
+      dynamic "rewrite_rule" {
+        for_each = each.value.rewrite_rule
+        content {
+          name = rewrite_rule.key
+          rule_sequence = rewrite_rule.value.rule_sequence
+          dynamic "response_header_configuration" {
+            for_each = each.value.response_header_configuration
+            content {
+              header_name = response_header_configuration.value.header_name
+              header_value = response_header_configuration.value.header_value
+            }
+            
+          }
+        }
+        
+      }
     }
   }
 
   waf_configuration {
-    enabled             = each.value.waf_configuration.enabled
-    firewall_mode       = each.value.waf_configuration.firewall_mode
-    rule_set_type       = each.value.waf_configuration.rule_set_type
-    rule_set_version    = each.value.waf_configuration.rule_set_version
+    enabled          = each.value.waf_configuration.enabled
+    firewall_mode    = each.value.waf_configuration.firewall_mode
+    rule_set_type    = each.value.waf_configuration.rule_set_type
+    rule_set_version = each.value.waf_configuration.rule_set_version
     # disabled_rule_group {
     #   rule_group_name = disabled_rule_group.rule_group_name.value
     # }
