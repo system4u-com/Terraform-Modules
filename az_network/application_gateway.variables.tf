@@ -52,18 +52,18 @@ variable "application_gateways" {
       redirect_configuration_name = optional(string)
     }))
     redirect_configurations = map(object({
-      redirect_type        = string(optional)
-      target_listener_name = string(optional)
-      include_path         = string(bool)
-      include_query_string = string(bool)
+      redirect_type        = optional(string)
+      target_listener_name = optional(string)
+      include_path         = optional(bool)
+      include_query_string = optional(bool)
     }))
     rewrite_rule_set = map(object({
       rewrite_rule = map(object({
-        rule_sequence = string(optional)
-        response_header_configuration = map(object({
-          header_name = string(optional)
-          header_value = string(optional)
-        }))
+        rule_sequence = optional(string)
+        response_header_configuration = object({
+          header_name = optional(string)
+          header_value = optional(string)
+        })
       }))
     }))
     waf_configuration = object({

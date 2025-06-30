@@ -104,13 +104,9 @@ resource "azurerm_application_gateway" "application_gateways" {
         content {
           name = rewrite_rule.key
           rule_sequence = rewrite_rule.value.rule_sequence
-          dynamic "response_header_configuration" {
-            for_each = each.value.response_header_configuration
-            content {
-              header_name = response_header_configuration.value.header_name
-              header_value = response_header_configuration.value.header_value
-            }
-            
+          response_header_configuration {
+              header_name = each.value.response_header_configuration.header_name
+              header_value = each.value.response_header_configuration.header_value
           }
         }
         
