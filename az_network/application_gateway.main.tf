@@ -98,18 +98,18 @@ resource "azurerm_application_gateway" "application_gateways" {
   dynamic "rewrite_rule_set" {
     for_each = each.value.rewrite_rule_set
     content {
-      name                 = rewrite_rule_set.key
+      name = rewrite_rule_set.key
       dynamic "rewrite_rule" {
         for_each = each.value.rewrite_rule
         content {
-          name = rewrite_rule.key
+          name          = rewrite_rule.key
           rule_sequence = rewrite_rule.value.rule_sequence
           response_header_configuration {
-              header_name = each.value.response_header_configuration.header_name
-              header_value = each.value.response_header_configuration.header_value
+            header_name  = each.value.response_header_configuration.header_name
+            header_value = each.value.response_header_configuration.header_value
           }
         }
-        
+
       }
     }
   }
