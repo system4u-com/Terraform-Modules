@@ -50,6 +50,7 @@ variable "application_gateways" {
       backend_address_pool_name   = optional(string)
       backend_http_settings_name  = optional(string)
       redirect_configuration_name = optional(string)
+      rewrite_rule_set_id         = optional(string)
     }))
     redirect_configurations = map(object({
       redirect_type        = optional(string)
@@ -57,13 +58,13 @@ variable "application_gateways" {
       include_path         = optional(bool)
       include_query_string = optional(bool)
     }))
-    rewrite_rule_set = map(object({
-      rewrite_rule = map(object({
+    rewrite_rule_sets = map(object({
+      rewrite_rules = map(object({
         rule_sequence = optional(string)
-        response_header_configuration = object({
+        response_header_configurations = optional(list(object({
           header_name = optional(string)
           header_value = optional(string)
-        })
+        })))
       }))
     }))
     waf_configuration = object({

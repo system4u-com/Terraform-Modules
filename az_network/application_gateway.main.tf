@@ -81,11 +81,12 @@ resource "azurerm_application_gateway" "application_gateways" {
       backend_address_pool_name   = request_routing_rule.value.backend_address_pool_name
       backend_http_settings_name  = request_routing_rule.value.backend_http_settings_name
       redirect_configuration_name = request_routing_rule.value.redirect_configuration_name
+      rewrite_rule_set_id         = request_routing_rule.value.rewrite_rule_set_id
     }
   }
 
   dynamic "redirect_configuration" {
-    for_each = each.value.redirect_configuration
+    for_each = each.value.redirect_configurations
     content {
       name                 = redirect_configuration.key
       redirect_type        = redirect_configuration.value.redirect_type
@@ -96,20 +97,22 @@ resource "azurerm_application_gateway" "application_gateways" {
   }
 
   dynamic "rewrite_rule_set" {
-    for_each = each.value.rewrite_rule_set
+    for_each = each.value.rewrite_rule_sets
     content {
       name = rewrite_rule_set.key
       dynamic "rewrite_rule" {
-        for_each = each.value.rewrite_rule
+        for_each = each.value.rewrite_rules
         content {
-          name          = rewrite_rule.key
-          rule_sequence = rewrite_rule.value.rule_sequence
-          response_header_configuration {
+          name          = rewrite_rule_set.rewrite_rule.key
+          rule_sequence = rewrite_rule_set.rewrite_rule.value.rule_sequence
+          dynamic "response_header_configuration" {
+            for_each = lookup(rewrite_rule.value, "response_header_configurations",[])
+            content {
             header_name  = each.value.response_header_configuration.header_name
             header_value = each.value.response_header_configuration.header_value
+            }
           }
         }
-
       }
     }
   }
