@@ -12,7 +12,7 @@ variable "container_app_jobs" {
       name = string
       id = string
     }))
-    replica_timeout_in_seconds = optional(number, 10)
+    replica_timeout_in_seconds = optional(number, 120)
     replica_retry_limit = optional(number, 3)
     schedule_trigger_config = optional(object({
       cron_expression = optional(string)
