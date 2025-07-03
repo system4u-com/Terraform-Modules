@@ -62,9 +62,9 @@ variable "application_gateways" {
       rewrite_rules = map(object({
         rule_sequence = optional(string)
         response_header_configurations = optional(list(object({
-          header_name = optional(string)
+          header_name  = optional(string)
           header_value = optional(string)
-        })))
+        })), null)
       }))
     }))
     waf_configuration = object({

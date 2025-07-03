@@ -106,10 +106,10 @@ resource "azurerm_application_gateway" "application_gateways" {
           name          = rewrite_rule.key
           rule_sequence = rewrite_rule.value.rule_sequence
           dynamic "response_header_configuration" {
-            for_each = lookup(rewrite_rule.value, "response_header_configurations",[])
+            for_each = lookup(rewrite_rule.value, "response_header_configurations", [])
             content {
-            header_name  = response_header_configuration.value.header_name
-            header_value = response_header_configuration.value.header_value
+              header_name  = response_header_configuration.value.header_name
+              header_value = response_header_configuration.value.header_value
             }
           }
         }
