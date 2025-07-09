@@ -34,6 +34,14 @@ resource "azurerm_windows_virtual_machine" "windows_vms" {
     }
   }
 
+  dynamic "identity" {
+        for_each = each.value.identity != null ? [each.value.identity] : []
+        content {
+            type         = identity.value.type
+            identity_ids = identity.value.identity_ids
+        }
+    }
+
   license_type = each.value.license_type
 
   tags = each.value.tags

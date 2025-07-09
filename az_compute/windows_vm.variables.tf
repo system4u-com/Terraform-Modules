@@ -29,6 +29,10 @@ variable "windows_virtual_machines" {
     }))
     license_type          = optional(string, "None") // on-premise license aka Azure Hybrid Use Benefit - None, Windows_Client and Windows_Server
     network_interface_ids = optional(list(string), [])
+    identity = optional(object({
+      type = optional(string) // Type of identity for the VM
+      identity_ids = optional(list(string))
+    }))
     tags                  = optional(map(string), {})
   }))
   default = {}
