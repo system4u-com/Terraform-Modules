@@ -8,6 +8,11 @@ resource "azurerm_managed_disk" "managed_disks" {
   create_option        = each.value.create_option
   disk_size_gb         = each.value.disk_size_gb
   tags                 = each.value.tags
+  lifecycle {
+    ignore_changes = [
+      source_resource_id, // Ignore changes to source_resource_id as it is not used in this context
+    ]
+  }
 }
 
 #Attach data disks to linux VMs
