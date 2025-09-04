@@ -20,7 +20,7 @@ variable "hosts" {
     source_image_reference = optional(object({
       publisher = optional(string, "MicrosoftWindowsDesktop")
       offer     = optional(string, "windows-11")
-      sku       = optional(string, "win11-22h2-avd")
+      sku       = optional(string, "win11-24h2-avd")
       version   = optional(string, "latest")
     }), {})
     license_type = optional(string, "None")
