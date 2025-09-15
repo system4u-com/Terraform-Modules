@@ -18,6 +18,7 @@ locals {
         }
         license_type = coalesce(host.license_type, "Windows_Client")
         domain_join_type = host.domain_join_type
+        mdm_id = host.mdm_id
         host_pool_name = host.host_pool_name
         tags         = host.tags
       }
@@ -82,6 +83,11 @@ resource "azurerm_virtual_machine_extension" "avd_host_extensions" {
   type                 = "AADLoginForWindows"
   type_handler_version = "2.2"
   auto_upgrade_minor_version = true
+  settings = <<-SETTINGS
+    {
+      ${each.value.mdm_id != null ? "\"mdmId\" : \"${each.value.mdm_id}\"" : ""}
+    }
+    SETTINGS
 }
 
 ### Conditional deployment of Azure Active Directory Domain Services join

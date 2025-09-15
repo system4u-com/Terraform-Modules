@@ -25,6 +25,7 @@ variable "hosts" {
     }), {})
     license_type = optional(string, "None")
     domain_join_type = optional(string, "entra-join")
+    mdm_id = optional(string)
     host_pool_name = optional(string)
     tags         = optional(map(string), {})
   }))
