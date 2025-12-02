@@ -36,4 +36,5 @@ variable "scaling_plans" {
     })), {})
     tags                     = optional(map(string), {})
   }))
+  default = {}
 }
