@@ -11,6 +11,11 @@ resource "azurerm_storage_account" "storage_accounts" {
   https_traffic_only_enabled = each.value.https_traffic_only_enabled
   allow_nested_items_to_be_public = each.value.allow_nested_items_to_be_public
 
+ # IMPORTANT: enable azure files identity auth -> AADKERB
+  azure_files_authentication {
+    directory_type = "AADKERB"
+    # When directory_type == "AADKERB", active_directory block must NOT be provided.
+  }
 
   tags = each.value.tags
 
