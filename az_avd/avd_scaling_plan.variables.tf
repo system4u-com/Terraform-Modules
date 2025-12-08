@@ -27,7 +27,7 @@ variable "scaling_plans" {
       ramp_down_wait_time_minutes = optional(number, 30)
       ramp_up_load_balancing_algorithm = optional(string, "DepthFirst")
       ramp_up_start_time     = optional(string, "08:00")
-      ramp_up_capacity_threshold_percent = optional(number, 10)
+      ramp_up_capacity_threshold_percent = optional(number, 80)
       ramp_up_minimum_hosts_percent = optional(number, 10)
     }))
     host_pools = optional(map(object({

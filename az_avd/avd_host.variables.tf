@@ -27,6 +27,17 @@ variable "hosts" {
     domain_join_type = optional(string, "entra-join")
     mdm_id = optional(string)
     host_pool_name = optional(string)
+    shutdown_schedule = optional(object({
+      daily_recurrence_time = optional(string)
+      timezone              = optional(string)
+      enabled               = optional(bool, false)
+      notification_settings = optional(object({
+        enabled         = optional(bool, false)
+        time_in_minutes = optional(number, 60)
+        webhook_url     = optional(string)
+        email           = optional(string)
+      }), {})
+    }), null)
     tags         = optional(map(string), {})
   }))
   default = {}

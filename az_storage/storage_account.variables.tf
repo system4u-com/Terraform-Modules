@@ -14,6 +14,19 @@ variable "storage_accounts" {
     access_tier                = optional(string, "Hot")
     https_traffic_only_enabled = optional(bool, true)
     allow_nested_items_to_be_public = optional(bool, true)
+    public_network_access_enabled = optional(bool, true)
+    azure_files_authentication = optional(object({
+      directory_type = optional(string) // e.g., "AADKERB"
+      active_directory = optional(object({
+        domain_name               = optional(string)
+        netbios_domain_name       = optional(string)
+        forest_name               = optional(string)
+        domain_guid               = optional(string)
+        domain_sid                = optional(string)
+        storage_sid               = optional(string)
+      }))
+      default_share_level_permission = optional(string, "None")
+    }))
     network_rules = optional(object({
       bypass         = optional(list(string), ["None"]) // None | Logging | Metrics | AzureServices
       default_action = optional(string, "Deny")         // Allow | Deny

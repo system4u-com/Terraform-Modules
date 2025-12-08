@@ -21,6 +21,10 @@ locals {
         mdm_id = host.mdm_id
         host_pool_name = host.host_pool_name
         tags         = host.tags
+        # Pass the shutdown_schedule through unchanged. It's an optional object
+        # on the input `host`. Avoid dereferencing it here to prevent errors when
+        # it's not defined for a host.
+        shutdown_schedule = host.shutdown_schedule
       }
     ]
   ])
@@ -88,6 +92,26 @@ resource "azurerm_virtual_machine_extension" "avd_host_extensions" {
       ${each.value.mdm_id != null ? "\"mdmId\" : \"${each.value.mdm_id}\"" : ""}
     }
     SETTINGS
+}
+
+resource "azurerm_dev_test_global_vm_shutdown_schedule" "avd_host_shutdown_schedules" {
+  # Only create schedules for hosts where a shutdown_schedule is provided
+  # and the schedule is enabled.
+  for_each = { for host in local.avd_hosts_flattened : host.name => host if host.shutdown_schedule != null && try(host.shutdown_schedule.enabled, false) }
+
+  virtual_machine_id = azurerm_windows_virtual_machine.avd_hosts[each.key].id
+  location           = each.value.location
+  enabled            = each.value.shutdown_schedule.enabled
+
+  daily_recurrence_time = each.value.shutdown_schedule.daily_recurrence_time
+  timezone              = each.value.shutdown_schedule.timezone
+
+  notification_settings {
+    enabled         = each.value.shutdown_schedule.notification_settings.enabled
+    time_in_minutes = each.value.shutdown_schedule.notification_settings.time_in_minutes
+    webhook_url     = each.value.shutdown_schedule.notification_settings.webhook_url
+    email           = each.value.shutdown_schedule.notification_settings.email
+  }
 }
 
 ### Conditional deployment of Azure Active Directory Domain Services join
