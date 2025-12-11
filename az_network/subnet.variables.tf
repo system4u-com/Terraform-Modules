@@ -9,6 +9,7 @@ variable "subnets" {
       resource_group_name = string
     })
     address_prefixes = list(string)
+    service_endpoints = optional(list(string))
   }))
   default = {}
 }
