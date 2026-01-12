@@ -5,4 +5,6 @@ resource "azurerm_subnet" "subnets" {
   resource_group_name  = each.value.virtual_network.resource_group_name
   virtual_network_name = each.value.virtual_network.name
   address_prefixes     = each.value.address_prefixes
+  service_endpoints    = each.value.service_endpoints
+  
 }
