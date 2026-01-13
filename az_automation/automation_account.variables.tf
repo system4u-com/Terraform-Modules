@@ -11,8 +11,8 @@ variable "automation_accounts" {
     sku_name = optional(string, "Basic")
     tags     = optional(map(string), {})
     identity = optional(object({
-      type         = optional(string) // Type of the identity, e.g., "SystemAssigned", "UserAssigned", "UserAssigned, SystemAssigned"
-      identity_ids = optional(map(string))
+      type         = optional(string) // Type of identity for the VM
+      identity_ids = optional(list(string))
     })) 
     publish_content_link = optional(object({
       uri = optional(string) // URI to the content to be published
