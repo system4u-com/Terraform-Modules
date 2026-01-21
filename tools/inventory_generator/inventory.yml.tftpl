@@ -1,0 +1,9 @@
+all:
+  children:
+%{ for group_name, hosts in groups ~}
+    ${group_name}:
+      hosts:
+%{   for h in hosts ~}
+        ${h.name}: {}
+%{   endfor ~}
+%{ endfor ~}
