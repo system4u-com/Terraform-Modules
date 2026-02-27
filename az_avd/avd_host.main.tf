@@ -92,6 +92,9 @@ resource "azurerm_virtual_machine_extension" "avd_host_extensions" {
       ${each.value.mdm_id != null ? "\"mdmId\" : \"${each.value.mdm_id}\"" : ""}
     }
     SETTINGS
+  provision_after_extensions = [
+    azurerm_virtual_machine_extension.avd_host_registrations[each.key].name
+  ]
 }
 
 resource "azurerm_dev_test_global_vm_shutdown_schedule" "avd_host_shutdown_schedules" {
