@@ -7,7 +7,7 @@ variable "email_communication_services" {
       name     = string
       location = string
     })
-    data_location = optional(string) // Location of the Communication Service, default Europe 
+    data_location = optional(string, "Europe") // Location of the Communication Service, default Europe 
     tags = optional(map(string), {})
   }))  
 }
