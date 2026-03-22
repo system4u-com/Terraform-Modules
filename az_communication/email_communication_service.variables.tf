@@ -9,5 +9,6 @@ variable "email_communication_services" {
     })
     data_location = optional(string, "Europe") // Location of the Communication Service, default Europe 
     tags = optional(map(string), {})
-  }))  
+  }))
+  default = {}  
 }
