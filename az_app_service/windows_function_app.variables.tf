@@ -12,7 +12,8 @@ variable "windows_function_apps" {
     storage_account = object({
       name = optional(string)
     })
-    storage_account_access_key = optional(string)
+    storage_account_access_key    = optional(string)
+    storage_uses_managed_identity = optional(bool, false)
     service_plan = object({
       id = string
     })
@@ -30,5 +31,20 @@ variable "windows_function_apps" {
       identity_ids = optional(list(string))
     }))
   }))
+
+  validation {
+    condition = alltrue([
+      for app in values(var.windows_function_apps) : try(app.storage_account.name, null) != null && trim(try(app.storage_account.name, "")) != ""
+    ])
+    error_message = "Each windows_function_apps item must define storage_account.name."
+  }
+
+  validation {
+    condition = alltrue([
+      for app in values(var.windows_function_apps) : try(app.storage_uses_managed_identity, false) || (try(app.storage_account_access_key, null) != null && trim(try(app.storage_account_access_key, "")) != "")
+    ])
+    error_message = "Each windows_function_apps item must set storage_account_access_key, or set storage_uses_managed_identity = true."
+  }
+
   default = {}
 }
