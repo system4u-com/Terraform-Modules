@@ -17,7 +17,12 @@ resource "azurerm_windows_function_app" "windows_function_apps" {
     dynamic "application_stack" {
       for_each = try(each.value.site_config.application_stack, null) != null ? [each.value.site_config.application_stack] : []
       content {
-        powershell_core_version = try(application_stack.value.powershell_core_version, null)
+        dotnet_version              = try(application_stack.value.dotnet_version, null)
+        use_dotnet_isolated_runtime = try(application_stack.value.use_dotnet_isolated_runtime, null)
+        java_version                = try(application_stack.value.java_version, null)
+        node_version                = try(application_stack.value.node_version, null)
+        powershell_core_version     = try(application_stack.value.powershell_core_version, null)
+        use_custom_runtime          = try(application_stack.value.use_custom_runtime, null)
       }
     }
 

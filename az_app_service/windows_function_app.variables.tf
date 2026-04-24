@@ -46,9 +46,9 @@ variable "windows_function_apps" {
 
   validation {
     condition = alltrue([
-      for app in values(var.windows_function_apps) : try(app.storage_uses_managed_identity, false) || (try(app.storage_account_access_key, null) != null && trim(try(app.storage_account_access_key, "")) != "")
+      for app in values(var.windows_function_apps) : try(app.storage_uses_managed_identity, false) != (try(app.storage_account_access_key, null) != null && trim(try(app.storage_account_access_key, "")) != "")
     ])
-    error_message = "Each windows_function_apps item must set storage_account_access_key, or set storage_uses_managed_identity = true."
+    error_message = "Each windows_function_apps item must set exactly one of storage_account_access_key or storage_uses_managed_identity = true."
   }
 
   default = {}
