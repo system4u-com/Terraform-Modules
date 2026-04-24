@@ -12,7 +12,7 @@ variable "windows_function_apps" {
     storage_account = object({
       name = optional(string)
     })
-    storage_account_access_key    = optional(string)
+    storage_account_access_key = optional(string)
     storage_uses_managed_identity = optional(bool, false)
     service_plan = object({
       id = string
@@ -22,7 +22,12 @@ variable "windows_function_apps" {
     app_settings                = optional(map(string), {})
     site_config = optional(object({
       application_stack = optional(object({
-        powershell_core_version = optional(string, null)
+        dotnet_version              = optional(string, null)
+        use_dotnet_isolated_runtime = optional(bool, null)
+        java_version                = optional(string, null)
+        node_version                = optional(string, null)
+        powershell_core_version     = optional(string, null)
+        use_custom_runtime          = optional(bool, null)
       }))
       application_insights_connection_string = optional(string)
     }), {})
