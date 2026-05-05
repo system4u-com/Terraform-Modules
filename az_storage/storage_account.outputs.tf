@@ -4,8 +4,15 @@ output "storage_accounts" {
       id       = value.id
       name     = value.name
       location = value.location
+    }
+  }
+}
+
+output "storage_accounts_sensitive" {
+  value = {
+    for k, value in azurerm_storage_account.storage_accounts : k => {
       primary_access_key = value.primary_access_key
     }
   }
-  
+  sensitive = true
 }
