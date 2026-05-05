@@ -1,16 +1,17 @@
 resource "azurerm_storage_account" "storage_accounts" {
   for_each = var.storage_accounts
 
-  name                       = coalesce(each.value.name, each.key)
-  resource_group_name        = each.value.resource_group.name
-  location                   = coalesce(each.value.location, each.value.resource_group.location) // Use the location from the resource group if not specified
-  account_tier               = each.value.account_tier
-  account_kind               = each.value.account_kind
-  account_replication_type   = each.value.account_replication_type
-  access_tier                = each.value.access_tier
-  https_traffic_only_enabled = each.value.https_traffic_only_enabled
-  allow_nested_items_to_be_public = each.value.allow_nested_items_to_be_public
-  public_network_access_enabled = each.value.public_network_access_enabled
+  name                             = coalesce(each.value.name, each.key)
+  resource_group_name              = each.value.resource_group.name
+  location                         = coalesce(each.value.location, each.value.resource_group.location) // Use the location from the resource group if not specified
+  account_tier                     = each.value.account_tier
+  account_kind                     = each.value.account_kind
+  account_replication_type         = each.value.account_replication_type
+  cross_tenant_replication_enabled = each.value.cross_tenant_replication_enabled
+  access_tier                      = each.value.access_tier
+  https_traffic_only_enabled       = each.value.https_traffic_only_enabled
+  allow_nested_items_to_be_public  = each.value.allow_nested_items_to_be_public
+  public_network_access_enabled    = each.value.public_network_access_enabled
 
  # IMPORTANT: enable azure files identity auth -> AADKERB
   
@@ -29,7 +30,7 @@ resource "azurerm_storage_account" "storage_accounts" {
           forest_name         = active_directory.value.forest_name
           domain_guid         = active_directory.value.domain_guid
           domain_sid          = active_directory.value.domain_sid
-          storage_sid        = active_directory.value.storage_sid
+          storage_sid         = active_directory.value.storage_sid
         }
       }
 
