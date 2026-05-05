@@ -13,7 +13,7 @@ variable "windows_function_apps" {
       name = optional(string)
     })
     storage_account_access_key = optional(string)
-    storage_uses_managed_identity = optional(bool, false)
+    storage_uses_managed_identity = optional(bool)
     service_plan = object({
       id = string
     })
@@ -46,7 +46,7 @@ variable "windows_function_apps" {
 
   validation {
     condition = alltrue([
-      for app in values(var.windows_function_apps) : try(app.storage_uses_managed_identity, false) != (try(app.storage_account_access_key, null) != null && try(app.storage_account_access_key, "") != "")
+      for app in values(var.windows_function_apps) : coalesce(try(app.storage_uses_managed_identity, null), false) != (try(app.storage_account_access_key, null) != null && try(app.storage_account_access_key, "") != "")
     ])
     error_message = "Each windows_function_apps item must set exactly one of storage_account_access_key or storage_uses_managed_identity = true."
   }

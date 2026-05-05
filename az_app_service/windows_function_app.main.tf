@@ -6,7 +6,7 @@ resource "azurerm_windows_function_app" "windows_function_apps" {
   location                      = coalesce(each.value.location, each.value.resource_group.location)
   storage_account_name          = each.value.storage_account != null ? each.value.storage_account.name : null
   storage_account_access_key    = each.value.storage_account_access_key
-  storage_uses_managed_identity = each.value.storage_uses_managed_identity
+  storage_uses_managed_identity = coalesce(each.value.storage_uses_managed_identity, false) ? true : null
   service_plan_id               = each.value.service_plan.id
   functions_extension_version   = each.value.functions_extension_version
   https_only                    = each.value.https_only
