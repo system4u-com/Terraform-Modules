@@ -16,6 +16,7 @@ resources being created.
 - `az_app_service`: service plans, Linux Function Apps (flex function app variables scaffold only)
 - `az_automation`: automation accounts, runbooks, schedules
 - `az_avd`: AVD workspaces, host pools, app groups, hosts, scaling plans
+- `az_cognitive_services`: cognitive accounts (Azure AI Foundry), projects, and model deployments
 - `az_compute`: virtual machines (Linux/Windows), managed disks, VM extensions
 - `az_container`: container app environments, container app jobs
 - `az_key_vault`: key vaults
