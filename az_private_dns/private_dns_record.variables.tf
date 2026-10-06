@@ -34,7 +34,7 @@ variable "private_dns_records" {
       for record in var.private_dns_records : (
         upper(record.type) == "CNAME"
         ? true
-        : length(record.records) > 0
+        : record.records != null && length(record.records) > 0
       )
     ])
     error_message = "A, AAAA and TXT records must contain at least one value in 'records'."
