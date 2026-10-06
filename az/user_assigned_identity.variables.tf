@@ -12,3 +12,12 @@ variable "user_assigned_identities" {
   }))
   default = {}
 }
+
+variable "unmanaged_user_assigned_identities" {
+  description = "Unmanaged User Assigned Identities"
+  type = map(object({
+    name                = string
+    resource_group_name = string
+  }))
+  default = {}
+}

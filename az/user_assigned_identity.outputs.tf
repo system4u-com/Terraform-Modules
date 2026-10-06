@@ -7,3 +7,13 @@ output "user_assigned_identities" {
     }
   }
 }
+
+output "unmanaged_user_assigned_identities" {
+  value = {
+    for k, value in data.azurerm_user_assigned_identity.unmanaged_user_assigned_identities : k => {
+      id       = value.id
+      name     = value.name
+      location = value.location
+    }
+  }
+}
