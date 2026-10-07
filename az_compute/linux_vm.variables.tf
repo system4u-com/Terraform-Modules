@@ -32,6 +32,10 @@ variable "linux_virtual_machines" {
       product   = optional(string)
     }))
     network_interface_ids = optional(list(string), [])
+    identity = optional(object({
+      type = optional(string) // Type of identity for the VM
+      identity_ids = optional(list(string))
+    }))
     tags                  = optional(map(string), {})
   }))
   default = {}
