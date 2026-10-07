@@ -22,6 +22,7 @@ resources being created.
 - `az_key_vault`: key vaults
 - `az_monitoring`: log analytics workspaces, action groups, metric alerts, diagnostic settings, scheduled query rules, data collection rules
 - `az_network`: virtual networks, subnets, NSGs, NICs, public IPs, route tables, gateways, peering, express route, application gateways
+- `az_private_dns`: Private DNS zones, virtual network links, and A/AAAA/CNAME/TXT records
 - `az_recovery_services`: recovery services vaults
 - `az_storage`: storage accounts, shares, sync, sync groups
 
