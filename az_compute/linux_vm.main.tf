@@ -43,5 +43,13 @@ resource "azurerm_linux_virtual_machine" "linux_vms" {
     }
   }
 
+  dynamic "identity" {
+    for_each = each.value.identity != null ? [each.value.identity] : []
+      content {
+        type         = identity.value.type
+        identity_ids = identity.value.identity_ids
+    }
+  }
+
   tags = each.value.tags
 }
