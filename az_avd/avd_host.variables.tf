@@ -23,7 +23,7 @@ variable "hosts" {
       sku       = optional(string, "win11-24h2-avd")
       version   = optional(string, "latest")
     }), {})
-    license_type = optional(string, "None")
+    license_type = optional(string)
     domain_join_type = optional(string, "entra-join")
     mdm_id = optional(string)
     host_pool_name = optional(string)
